@@ -1,0 +1,48 @@
+name: RISC-V SoC Verification
+
+# Run this workflow every time code is pushed to the 'main' branch
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  simulate:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Check out the repository code
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # 2. Install the RISC-V GCC toolchain (Required to compile main.c)
+    - name: Install RISC-V Toolchain
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y gcc-riscv64-unknown-elf
+
+    # 3. Install Verilator (Required for hardware simulation)
+    - name: Install Verilator
+      run: |
+        sudo apt-get install -y verilator
+
+    # 4. Set up Python environment
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    # 5. Install Cocotb Verification Framework
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install cocotb pytest
+
+    # 6. Compile Firmware and Run Simulation
+    - name: Run Cocotb Testbench
+      run: |
+        cd sim
+        make clean
+        make firmware
+        make
