@@ -1,0 +1,31 @@
+name: Vivado Physical Synthesis
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  synthesize:
+    # CRITICAL: This tells GitHub to route the job to your local machine!
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Run Vivado Headless Build
+      run: |
+        # Source your local Vivado environment variables 
+        # (Update this path to match exactly where Vivado is installed on your Linux machine)
+        source /tools/Xilinx/Vivado/2023.2/settings64.sh
+        
+        # Launch Vivado in batch mode without the GUI
+        vivado -mode batch -source scripts/build.tcl
+        
+    - name: Upload Timing and Area Reports
+      uses: actions/upload-artifact@v4
+      with:
+        name: vivado-reports
+        path: |
+          post_route_timing.rpt
+          post_route_util.rpt
