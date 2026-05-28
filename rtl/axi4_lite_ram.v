@@ -26,16 +26,29 @@ module axi4_lite_ram #(
     input  wire        S_AXI_RREADY
 );
 
-    // Byte-addressed memory array (8192 individual bytes)
-    reg [7:0] mem [0:(MEM_SIZE-1)];
+    // 32-bit wide memory array. Vivado will map this perfectly to Block RAM.
+    (* ram_style = "block" *) reg [31:0] mem [0:(MEM_SIZE/4)-1];
 
+    // Temporary elaboration array for loading GCC's byte-addressed hex
+    reg [7:0] mem_8bit [0:MEM_SIZE-1];
+
+    integer i;
     initial begin
-        // Read the hex file. Because the array is now 8-bits wide, 
-        // it perfectly matches the GCC byte-output format.
-        $readmemh(`FIRMWARE_PATH, mem);
+        // 1. Initialize temporary array to zero to prevent X-propagation
+        for (i = 0; i < MEM_SIZE; i = i + 1) begin
+            mem_8bit[i] = 8'h00;
+        end
+
+        // 2. Load the byte-addressed hex file
+        $readmemh(`FIRMWARE_PATH, mem_8bit);
+
+        // 3. Pack the bytes into the 32-bit BRAM array (RISC-V is Little-Endian)
+        for (i = 0; i < MEM_SIZE/4; i = i + 1) begin
+            mem[i] = {mem_8bit[i*4+3], mem_8bit[i*4+2], mem_8bit[i*4+1], mem_8bit[i*4+0]};
+        end
     end
 
-    // AXI Read Path (Concatenate 4 bytes into a 32-bit word, Little-Endian)
+    // AXI Read Path 
     always @(posedge S_AXI_ACLK) begin
         if (!S_AXI_ARESETN) begin
             S_AXI_ARREADY <= 1'b0;
@@ -46,14 +59,8 @@ module axi4_lite_ram #(
             S_AXI_ARREADY <= 1'b1;
             
             if (S_AXI_ARVALID && S_AXI_ARREADY) begin
-                // RISC-V is Little-Endian. The lowest address holds the least significant byte.
-                // We mask the lower 2 bits of the address (ARADDR[31:2]) to align to 32-bit boundaries.
-                S_AXI_RDATA <= { 
-                    mem[{S_AXI_ARADDR[31:2], 2'b11}], // Byte 3 (MSB)
-                    mem[{S_AXI_ARADDR[31:2], 2'b10}], // Byte 2
-                    mem[{S_AXI_ARADDR[31:2], 2'b01}], // Byte 1
-                    mem[{S_AXI_ARADDR[31:2], 2'b00}]  // Byte 0 (LSB)
-                };
+                // Read exactly one 32-bit word directly from the word-aligned address
+                S_AXI_RDATA  <= mem[S_AXI_ARADDR[31:2]];
                 S_AXI_RVALID <= 1'b1;
                 S_AXI_RRESP  <= 2'b00;
             end else if (S_AXI_RREADY) begin
@@ -62,7 +69,7 @@ module axi4_lite_ram #(
         end
     end
 
-    // AXI Write Path (Byte-enable strobes)
+    // AXI Write Path with standard Block RAM byte-strobes
     always @(posedge S_AXI_ACLK) begin
         if (!S_AXI_ARESETN) begin
             S_AXI_AWREADY <= 1'b0;
@@ -74,10 +81,10 @@ module axi4_lite_ram #(
             S_AXI_WREADY  <= 1'b1;
             
             if (S_AXI_AWVALID && S_AXI_WVALID && !S_AXI_BVALID) begin
-                if (S_AXI_WSTRB[0]) mem[{S_AXI_AWADDR[31:2], 2'b00}] <= S_AXI_WDATA[7:0];
-                if (S_AXI_WSTRB[1]) mem[{S_AXI_AWADDR[31:2], 2'b01}] <= S_AXI_WDATA[15:8];
-                if (S_AXI_WSTRB[2]) mem[{S_AXI_AWADDR[31:2], 2'b10}] <= S_AXI_WDATA[23:16];
-                if (S_AXI_WSTRB[3]) mem[{S_AXI_AWADDR[31:2], 2'b11}] <= S_AXI_WDATA[31:24];
+                if (S_AXI_WSTRB[0]) mem[S_AXI_AWADDR[31:2]][7:0]   <= S_AXI_WDATA[7:0];
+                if (S_AXI_WSTRB[1]) mem[S_AXI_AWADDR[31:2]][15:8]  <= S_AXI_WDATA[15:8];
+                if (S_AXI_WSTRB[2]) mem[S_AXI_AWADDR[31:2]][23:16] <= S_AXI_WDATA[23:16];
+                if (S_AXI_WSTRB[3]) mem[S_AXI_AWADDR[31:2]][31:24] <= S_AXI_WDATA[31:24];
                 S_AXI_BVALID <= 1'b1;
                 S_AXI_BRESP  <= 2'b00;
             end else if (S_AXI_BREADY) begin
