@@ -417,6 +417,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
         IData/*31:0*/ soc_top__DOT__s0_ram__DOT__S_AXI_WDATA;
         IData/*31:0*/ soc_top__DOT__s0_ram__DOT__S_AXI_ARADDR;
         IData/*31:0*/ soc_top__DOT__s0_ram__DOT__S_AXI_RDATA;
+        IData/*31:0*/ soc_top__DOT__s0_ram__DOT__i;
         IData/*31:0*/ soc_top__DOT__s1_mac__DOT__S_AXI_WDATA;
         IData/*31:0*/ soc_top__DOT__s1_mac__DOT__S_AXI_RDATA;
         IData/*31:0*/ soc_top__DOT__s1_mac__DOT__ctrl_reg;
@@ -433,7 +434,8 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
         QData/*63:0*/ soc_top__DOT__cpu__DOT__picorv32_core__DOT__q_ascii_instr;
         QData/*63:0*/ soc_top__DOT__cpu__DOT__picorv32_core__DOT__cached_ascii_instr;
         VlUnpacked<IData/*31:0*/, 32> soc_top__DOT__cpu__DOT__picorv32_core__DOT__cpuregs;
-        VlUnpacked<CData/*7:0*/, 8192> soc_top__DOT__s0_ram__DOT__mem;
+        VlUnpacked<IData/*31:0*/, 2048> soc_top__DOT__s0_ram__DOT__mem;
+        VlUnpacked<CData/*7:0*/, 8192> soc_top__DOT__s0_ram__DOT__mem_8bit;
     };
     VlTriggerVec<1> __VstlTriggered;
     VlTriggerVec<1> __VicoTriggered;

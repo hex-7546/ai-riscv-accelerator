@@ -57,9 +57,37 @@ VL_ATTR_COLD void Vtop___024root___eval_initial__TOP(Vtop___024root* vlSelf) {
     vlSelfRef.soc_top__DOT__cpu__DOT__picorv32_core__DOT__mem_la_firstword = 0U;
     vlSelfRef.soc_top__DOT__cpu__DOT__picorv32_core__DOT__mem_la_firstword_xfer = 0U;
     vlSelfRef.soc_top__DOT__cpu__DOT__picorv32_core__DOT__mem_la_use_prefetched_high_word = 0U;
+    vlSelfRef.soc_top__DOT__s0_ram__DOT__i = 0U;
+    while (VL_GTS_III(32, 0x2000U, vlSelfRef.soc_top__DOT__s0_ram__DOT__i)) {
+        vlSelfRef.soc_top__DOT__s0_ram__DOT__mem_8bit[(0x1fffU 
+                                                       & vlSelfRef.soc_top__DOT__s0_ram__DOT__i)] = 0U;
+        vlSelfRef.soc_top__DOT__s0_ram__DOT__i = ((IData)(1U) 
+                                                  + vlSelfRef.soc_top__DOT__s0_ram__DOT__i);
+    }
     VL_READMEM_N(true, 8, 8192, 0, VL_CVT_PACK_STR_NW(14, Vtop__ConstPool__CONST_h020d7b90_0)
-                 ,  &(vlSelfRef.soc_top__DOT__s0_ram__DOT__mem)
+                 ,  &(vlSelfRef.soc_top__DOT__s0_ram__DOT__mem_8bit)
                  , 0, ~0ULL);
+    vlSelfRef.soc_top__DOT__s0_ram__DOT__i = 0U;
+    while (VL_GTS_III(32, 0x800U, vlSelfRef.soc_top__DOT__s0_ram__DOT__i)) {
+        vlSelfRef.soc_top__DOT__s0_ram__DOT__mem[(0x7ffU 
+                                                  & vlSelfRef.soc_top__DOT__s0_ram__DOT__i)] 
+            = (((vlSelfRef.soc_top__DOT__s0_ram__DOT__mem_8bit
+                 [(0x1fffU & ((IData)(3U) + VL_MULS_III(32, (IData)(4U), vlSelfRef.soc_top__DOT__s0_ram__DOT__i)))] 
+                 << 0x18U) | (vlSelfRef.soc_top__DOT__s0_ram__DOT__mem_8bit
+                              [(0x1fffU & ((IData)(2U) 
+                                           + VL_MULS_III(32, (IData)(4U), vlSelfRef.soc_top__DOT__s0_ram__DOT__i)))] 
+                              << 0x10U)) | ((vlSelfRef.soc_top__DOT__s0_ram__DOT__mem_8bit
+                                             [(0x1fffU 
+                                               & ((IData)(1U) 
+                                                  + 
+                                                  VL_MULS_III(32, (IData)(4U), vlSelfRef.soc_top__DOT__s0_ram__DOT__i)))] 
+                                             << 8U) 
+                                            | vlSelfRef.soc_top__DOT__s0_ram__DOT__mem_8bit
+                                            [(0x1fffU 
+                                              & VL_MULS_III(32, (IData)(4U), vlSelfRef.soc_top__DOT__s0_ram__DOT__i))]));
+        vlSelfRef.soc_top__DOT__s0_ram__DOT__i = ((IData)(1U) 
+                                                  + vlSelfRef.soc_top__DOT__s0_ram__DOT__i);
+    }
     vlSelfRef.soc_top__DOT__cpu__DOT__picorv32_core__DOT__pcpi_mul_rd = 0U;
     vlSelfRef.soc_top__DOT__cpu__DOT__picorv32_core__DOT__pcpi_div_rd = 0U;
 }
@@ -570,9 +598,13 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->soc_top__DOT__s0_ram__DOT__S_AXI_RRESP = VL_RAND_RESET_I(2);
     vlSelf->soc_top__DOT__s0_ram__DOT__S_AXI_RVALID = VL_RAND_RESET_I(1);
     vlSelf->soc_top__DOT__s0_ram__DOT__S_AXI_RREADY = VL_RAND_RESET_I(1);
-    for (int __Vi0 = 0; __Vi0 < 8192; ++__Vi0) {
-        vlSelf->soc_top__DOT__s0_ram__DOT__mem[__Vi0] = VL_RAND_RESET_I(8);
+    for (int __Vi0 = 0; __Vi0 < 2048; ++__Vi0) {
+        vlSelf->soc_top__DOT__s0_ram__DOT__mem[__Vi0] = VL_RAND_RESET_I(32);
     }
+    for (int __Vi0 = 0; __Vi0 < 8192; ++__Vi0) {
+        vlSelf->soc_top__DOT__s0_ram__DOT__mem_8bit[__Vi0] = VL_RAND_RESET_I(8);
+    }
+    vlSelf->soc_top__DOT__s0_ram__DOT__i = VL_RAND_RESET_I(32);
     vlSelf->soc_top__DOT__s1_mac__DOT__S_AXI_ACLK = VL_RAND_RESET_I(1);
     vlSelf->soc_top__DOT__s1_mac__DOT__S_AXI_ARESETN = VL_RAND_RESET_I(1);
     vlSelf->soc_top__DOT__s1_mac__DOT__S_AXI_AWADDR = VL_RAND_RESET_I(4);

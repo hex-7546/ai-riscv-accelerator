@@ -865,25 +865,25 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
     __VdlySet__soc_top__DOT__cpu__DOT__picorv32_core__DOT__cpuregs__v0 = 0;
     CData/*7:0*/ __VdlyVal__soc_top__DOT__s0_ram__DOT__mem__v0;
     __VdlyVal__soc_top__DOT__s0_ram__DOT__mem__v0 = 0;
-    SData/*12:0*/ __VdlyDim0__soc_top__DOT__s0_ram__DOT__mem__v0;
+    SData/*10:0*/ __VdlyDim0__soc_top__DOT__s0_ram__DOT__mem__v0;
     __VdlyDim0__soc_top__DOT__s0_ram__DOT__mem__v0 = 0;
     CData/*0:0*/ __VdlySet__soc_top__DOT__s0_ram__DOT__mem__v0;
     __VdlySet__soc_top__DOT__s0_ram__DOT__mem__v0 = 0;
     CData/*7:0*/ __VdlyVal__soc_top__DOT__s0_ram__DOT__mem__v1;
     __VdlyVal__soc_top__DOT__s0_ram__DOT__mem__v1 = 0;
-    SData/*12:0*/ __VdlyDim0__soc_top__DOT__s0_ram__DOT__mem__v1;
+    SData/*10:0*/ __VdlyDim0__soc_top__DOT__s0_ram__DOT__mem__v1;
     __VdlyDim0__soc_top__DOT__s0_ram__DOT__mem__v1 = 0;
     CData/*0:0*/ __VdlySet__soc_top__DOT__s0_ram__DOT__mem__v1;
     __VdlySet__soc_top__DOT__s0_ram__DOT__mem__v1 = 0;
     CData/*7:0*/ __VdlyVal__soc_top__DOT__s0_ram__DOT__mem__v2;
     __VdlyVal__soc_top__DOT__s0_ram__DOT__mem__v2 = 0;
-    SData/*12:0*/ __VdlyDim0__soc_top__DOT__s0_ram__DOT__mem__v2;
+    SData/*10:0*/ __VdlyDim0__soc_top__DOT__s0_ram__DOT__mem__v2;
     __VdlyDim0__soc_top__DOT__s0_ram__DOT__mem__v2 = 0;
     CData/*0:0*/ __VdlySet__soc_top__DOT__s0_ram__DOT__mem__v2;
     __VdlySet__soc_top__DOT__s0_ram__DOT__mem__v2 = 0;
     CData/*7:0*/ __VdlyVal__soc_top__DOT__s0_ram__DOT__mem__v3;
     __VdlyVal__soc_top__DOT__s0_ram__DOT__mem__v3 = 0;
-    SData/*12:0*/ __VdlyDim0__soc_top__DOT__s0_ram__DOT__mem__v3;
+    SData/*10:0*/ __VdlyDim0__soc_top__DOT__s0_ram__DOT__mem__v3;
     __VdlyDim0__soc_top__DOT__s0_ram__DOT__mem__v3 = 0;
     CData/*0:0*/ __VdlySet__soc_top__DOT__s0_ram__DOT__mem__v3;
     __VdlySet__soc_top__DOT__s0_ram__DOT__mem__v3 = 0;
@@ -1031,18 +1031,9 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
         if (((IData)(vlSelfRef.soc_top__DOT__s0_axi_arvalid) 
              & (IData)(vlSelfRef.soc_top__DOT__s0_ram__DOT__S_AXI_ARREADY))) {
             vlSelfRef.soc_top__DOT__s0_ram__DOT__S_AXI_RDATA 
-                = (((vlSelfRef.soc_top__DOT__s0_ram__DOT__mem
-                     [(3U | (0x1ffcU & vlSelfRef.soc_top__DOT__mem_axi_araddr))] 
-                     << 0x18U) | (vlSelfRef.soc_top__DOT__s0_ram__DOT__mem
-                                  [(2U | (0x1ffcU & vlSelfRef.soc_top__DOT__mem_axi_araddr))] 
-                                  << 0x10U)) | ((vlSelfRef.soc_top__DOT__s0_ram__DOT__mem
-                                                 [(1U 
-                                                   | (0x1ffcU 
-                                                      & vlSelfRef.soc_top__DOT__mem_axi_araddr))] 
-                                                 << 8U) 
-                                                | vlSelfRef.soc_top__DOT__s0_ram__DOT__mem
-                                                [(0x1ffcU 
-                                                  & vlSelfRef.soc_top__DOT__mem_axi_araddr)]));
+                = vlSelfRef.soc_top__DOT__s0_ram__DOT__mem
+                [(0x7ffU & (vlSelfRef.soc_top__DOT__mem_axi_araddr 
+                            >> 2U))];
             vlSelfRef.soc_top__DOT__s0_ram__DOT__S_AXI_RVALID = 1U;
             vlSelfRef.soc_top__DOT__s0_ram__DOT__S_AXI_RRESP = 0U;
         } else if (vlSelfRef.soc_top__DOT__s0_axi_rready) {
@@ -1055,7 +1046,8 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
                 __VdlyVal__soc_top__DOT__s0_ram__DOT__mem__v0 
                     = (0xffU & vlSelfRef.soc_top__DOT__mem_axi_wdata);
                 __VdlyDim0__soc_top__DOT__s0_ram__DOT__mem__v0 
-                    = (0x1ffcU & vlSelfRef.soc_top__DOT__mem_axi_awaddr);
+                    = (0x7ffU & (vlSelfRef.soc_top__DOT__mem_axi_awaddr 
+                                 >> 2U));
                 __VdlySet__soc_top__DOT__s0_ram__DOT__mem__v0 = 1U;
             }
             vlSelfRef.soc_top__DOT__s0_ram__DOT__S_AXI_BVALID = 1U;
@@ -1065,7 +1057,8 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
                     = (0xffU & (vlSelfRef.soc_top__DOT__mem_axi_wdata 
                                 >> 8U));
                 __VdlyDim0__soc_top__DOT__s0_ram__DOT__mem__v1 
-                    = (1U | (0x1ffcU & vlSelfRef.soc_top__DOT__mem_axi_awaddr));
+                    = (0x7ffU & (vlSelfRef.soc_top__DOT__mem_axi_awaddr 
+                                 >> 2U));
                 __VdlySet__soc_top__DOT__s0_ram__DOT__mem__v1 = 1U;
             }
             if ((4U & (IData)(vlSelfRef.soc_top__DOT__mem_axi_wstrb))) {
@@ -1073,7 +1066,8 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
                     = (0xffU & (vlSelfRef.soc_top__DOT__mem_axi_wdata 
                                 >> 0x10U));
                 __VdlyDim0__soc_top__DOT__s0_ram__DOT__mem__v2 
-                    = (2U | (0x1ffcU & vlSelfRef.soc_top__DOT__mem_axi_awaddr));
+                    = (0x7ffU & (vlSelfRef.soc_top__DOT__mem_axi_awaddr 
+                                 >> 2U));
                 __VdlySet__soc_top__DOT__s0_ram__DOT__mem__v2 = 1U;
             }
             if ((8U & (IData)(vlSelfRef.soc_top__DOT__mem_axi_wstrb))) {
@@ -1081,7 +1075,8 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
                     = (vlSelfRef.soc_top__DOT__mem_axi_wdata 
                        >> 0x18U);
                 __VdlyDim0__soc_top__DOT__s0_ram__DOT__mem__v3 
-                    = (3U | (0x1ffcU & vlSelfRef.soc_top__DOT__mem_axi_awaddr));
+                    = (0x7ffU & (vlSelfRef.soc_top__DOT__mem_axi_awaddr 
+                                 >> 2U));
                 __VdlySet__soc_top__DOT__s0_ram__DOT__mem__v3 = 1U;
             }
         } else if (vlSelfRef.soc_top__DOT__s0_axi_bready) {
@@ -1176,19 +1171,30 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
     }
     if (__VdlySet__soc_top__DOT__s0_ram__DOT__mem__v0) {
         vlSelfRef.soc_top__DOT__s0_ram__DOT__mem[__VdlyDim0__soc_top__DOT__s0_ram__DOT__mem__v0] 
-            = __VdlyVal__soc_top__DOT__s0_ram__DOT__mem__v0;
+            = ((0xffffff00U & vlSelfRef.soc_top__DOT__s0_ram__DOT__mem
+                [__VdlyDim0__soc_top__DOT__s0_ram__DOT__mem__v0]) 
+               | (IData)(__VdlyVal__soc_top__DOT__s0_ram__DOT__mem__v0));
     }
     if (__VdlySet__soc_top__DOT__s0_ram__DOT__mem__v1) {
         vlSelfRef.soc_top__DOT__s0_ram__DOT__mem[__VdlyDim0__soc_top__DOT__s0_ram__DOT__mem__v1] 
-            = __VdlyVal__soc_top__DOT__s0_ram__DOT__mem__v1;
+            = ((0xffff00ffU & vlSelfRef.soc_top__DOT__s0_ram__DOT__mem
+                [__VdlyDim0__soc_top__DOT__s0_ram__DOT__mem__v1]) 
+               | ((IData)(__VdlyVal__soc_top__DOT__s0_ram__DOT__mem__v1) 
+                  << 8U));
     }
     if (__VdlySet__soc_top__DOT__s0_ram__DOT__mem__v2) {
         vlSelfRef.soc_top__DOT__s0_ram__DOT__mem[__VdlyDim0__soc_top__DOT__s0_ram__DOT__mem__v2] 
-            = __VdlyVal__soc_top__DOT__s0_ram__DOT__mem__v2;
+            = ((0xff00ffffU & vlSelfRef.soc_top__DOT__s0_ram__DOT__mem
+                [__VdlyDim0__soc_top__DOT__s0_ram__DOT__mem__v2]) 
+               | ((IData)(__VdlyVal__soc_top__DOT__s0_ram__DOT__mem__v2) 
+                  << 0x10U));
     }
     if (__VdlySet__soc_top__DOT__s0_ram__DOT__mem__v3) {
         vlSelfRef.soc_top__DOT__s0_ram__DOT__mem[__VdlyDim0__soc_top__DOT__s0_ram__DOT__mem__v3] 
-            = __VdlyVal__soc_top__DOT__s0_ram__DOT__mem__v3;
+            = ((0xffffffU & vlSelfRef.soc_top__DOT__s0_ram__DOT__mem
+                [__VdlyDim0__soc_top__DOT__s0_ram__DOT__mem__v3]) 
+               | ((IData)(__VdlyVal__soc_top__DOT__s0_ram__DOT__mem__v3) 
+                  << 0x18U));
     }
     vlSelfRef.soc_top__DOT__cpu__DOT__trace_data = vlSelfRef.soc_top__DOT__cpu__DOT__picorv32_core__DOT__trace_data;
     vlSelfRef.soc_top__DOT__cpu__DOT__trace_valid = vlSelfRef.soc_top__DOT__cpu__DOT__picorv32_core__DOT__trace_valid;

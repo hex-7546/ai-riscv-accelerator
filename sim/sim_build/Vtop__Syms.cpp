@@ -495,7 +495,9 @@ Vtop__Syms::Vtop__Syms(VerilatedContext* contextp, const char* namep, Vtop* mode
         __Vscope_soc_top__s0_ram.varInsert(__Vfinal,"S_AXI_WREADY", &(TOP.soc_top__DOT__s0_ram__DOT__S_AXI_WREADY), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
         __Vscope_soc_top__s0_ram.varInsert(__Vfinal,"S_AXI_WSTRB", &(TOP.soc_top__DOT__s0_ram__DOT__S_AXI_WSTRB), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,3,0);
         __Vscope_soc_top__s0_ram.varInsert(__Vfinal,"S_AXI_WVALID", &(TOP.soc_top__DOT__s0_ram__DOT__S_AXI_WVALID), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
-        __Vscope_soc_top__s0_ram.varInsert(__Vfinal,"mem", &(TOP.soc_top__DOT__s0_ram__DOT__mem), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,1,1 ,0,8191 ,7,0);
+        __Vscope_soc_top__s0_ram.varInsert(__Vfinal,"i", &(TOP.soc_top__DOT__s0_ram__DOT__i), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_soc_top__s0_ram.varInsert(__Vfinal,"mem", &(TOP.soc_top__DOT__s0_ram__DOT__mem), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,1,1 ,0,2047 ,31,0);
+        __Vscope_soc_top__s0_ram.varInsert(__Vfinal,"mem_8bit", &(TOP.soc_top__DOT__s0_ram__DOT__mem_8bit), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,1,1 ,0,8191 ,7,0);
         __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"C_S_AXI_ADDR_WIDTH", const_cast<void*>(static_cast<const void*>(&(TOP.soc_top__DOT__s1_mac__DOT__C_S_AXI_ADDR_WIDTH))), true, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
         __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"C_S_AXI_DATA_WIDTH", const_cast<void*>(static_cast<const void*>(&(TOP.soc_top__DOT__s1_mac__DOT__C_S_AXI_DATA_WIDTH))), true, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
         __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"S_AXI_ACLK", &(TOP.soc_top__DOT__s1_mac__DOT__S_AXI_ACLK), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
