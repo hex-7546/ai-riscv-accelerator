@@ -8,13 +8,13 @@ set design_name "soc_top"
 # 2. Read Verilog RTL
 read_verilog [glob rtl/*.v]
 
-# 3. Apply Physical Constraints
-# Inject a 100MHz clock constraint for Static Timing Analysis (STA)
-create_clock -period 10.000 -name sys_clk_pin -waveform {0.000 5.000} [get_ports clk]
-
-# 4. Synthesize Design
-# CRITICAL: Pass the macro directly to the synthesis engine in non-project mode
+# 3. Synthesize Design
+# Pass the macro directly to the synthesis engine in non-project mode
 synth_design -top $design_name -part $part_name -verilog_define "FIRMWARE_PATH=\"firmware/firmware.hex\""
+
+# 4. Apply Physical Constraints
+# NOW we can constrain the clock, because the synthesized design is open in memory
+create_clock -period 10.000 -name sys_clk_pin -waveform {0.000 5.000} [get_ports clk]
 
 # 5. Place and Route
 opt_design
