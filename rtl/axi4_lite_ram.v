@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 module axi4_lite_ram #(
-    parameter MEM_SIZE = 8192 // 8KB
+    parameter MEM_SIZE = 32768 // 32KB
 )(
     input  wire        S_AXI_ACLK,
     input  wire        S_AXI_ARESETN,

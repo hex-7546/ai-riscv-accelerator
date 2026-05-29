@@ -1,6 +1,0 @@
-<testsuites name="results">
-  <testsuite name="all" package="all">
-    <property name="random_seed" value="1780032340" />
-    <testcase name="test_riscv_mac_integration" classname="test_soc" file="/home/hex/Desktop/INT_ACCEL/sim/test_soc.py" lineno="5" time="0.14006876945495605" sim_time_ns="19100.0" ratio_time="136361.58919881325" />
-  </testsuite>
-</testsuites>
