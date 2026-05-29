@@ -199,7 +199,7 @@ module soc_top (
 
     // Slave 0: AXI4-Lite RAM (Base: 0x0000_0000)
     axi4_lite_ram #(
-        .MEM_SIZE(8192) // 8KB Memory
+        .MEM_SIZE(32768) // 32KB Memory
     ) s0_ram (
         .S_AXI_ACLK   (clk),
         .S_AXI_ARESETN(resetn),
