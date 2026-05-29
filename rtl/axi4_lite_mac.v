@@ -37,14 +37,13 @@ module axi4_lite_mac #(
     wire signed [7:0]  w_val    = wgt_reg[7:0];
     wire signed [7:0]  a_val    = act_reg[7:0];
     wire signed [15:0] prod_val = w_val * a_val; // Safeguard bit growth
-
     // Basic write register handling
     always @(posedge S_AXI_ACLK) begin
         if (!S_AXI_ARESETN) begin
-            ctrl_reg     <= 32'd0;
-            wgt_reg      <= 32'd0;
-            act_reg      <= 32'd0;
-            res_reg      <= 32'd0;
+            ctrl_reg      <= 32'd0;
+            wgt_reg       <= 32'd0;
+            act_reg       <= 32'd0;
+            res_reg       <= 32'd0;
             S_AXI_AWREADY <= 1'b0;
             S_AXI_WREADY  <= 1'b0;
             S_AXI_BVALID  <= 1'b0;
@@ -52,12 +51,16 @@ module axi4_lite_mac #(
             S_AXI_AWREADY <= 1'b1;
             S_AXI_WREADY  <= 1'b1;
 
-            // Handle execution state changes
-            if (ctrl_reg[0] == 1'b1) begin
+            // --- UPDATED: Handle execution state changes ---
+            if (ctrl_reg[2] == 1'b1) begin
+                res_reg <= 32'd0;
+		ctrl_reg <= 32'd0;
+            end else if (ctrl_reg[0] == 1'b1) begin
                 // Compute the MAC operation instantly in one clock cycle
                 res_reg  <= res_reg + {{16{prod_val[15]}}, prod_val}; // Sign-extend to 32-bits
                 ctrl_reg <= 32'h0000_0002; // Clear Start bit, set Done bit (Bit 1)
             end
+            // -----------------------------------------------
 
             if (S_AXI_AWVALID && S_AXI_WVALID && !S_AXI_BVALID) begin
                 S_AXI_BVALID <= 1'b1;

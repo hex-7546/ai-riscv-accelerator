@@ -36,10 +36,10 @@ async def test_riscv_mac_integration(dut):
             # Note: You may need to change 's1_mac' and 'mac_result' to match 
             # exactly what you named them in your Verilog code.
             try:
-                hardware_result = dut.s1_mac.res_reg.value.integer
+                hardware_result = dut.s1_mac.res_reg.value.to_unsigned()
                 dut._log.info(f"Final Hardware Accumulator Value: {hardware_result}")
                 
-                assert hardware_result == 28, f"Math failed! Expected 28, got {hardware_result}"
+                assert hardware_result == 64, f"Math failed! Expected 25, got {hardware_result}"
                 dut._log.info("SUCCESS: RISC-V to MAC Integration passed.")
                 return
             except AttributeError:

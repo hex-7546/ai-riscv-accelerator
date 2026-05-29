@@ -857,6 +857,10 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
     __Vdly__soc_top__DOT__cpu__DOT__picorv32_core__DOT__cpu_state = 0;
     IData/*31:0*/ __Vdly__soc_top__DOT__cpu__DOT__picorv32_core__DOT__reg_op1;
     __Vdly__soc_top__DOT__cpu__DOT__picorv32_core__DOT__reg_op1 = 0;
+    IData/*31:0*/ __Vdly__soc_top__DOT__s1_mac__DOT__res_reg;
+    __Vdly__soc_top__DOT__s1_mac__DOT__res_reg = 0;
+    IData/*31:0*/ __Vdly__soc_top__DOT__s1_mac__DOT__ctrl_reg;
+    __Vdly__soc_top__DOT__s1_mac__DOT__ctrl_reg = 0;
     IData/*31:0*/ __VdlyVal__soc_top__DOT__cpu__DOT__picorv32_core__DOT__cpuregs__v0;
     __VdlyVal__soc_top__DOT__cpu__DOT__picorv32_core__DOT__cpuregs__v0 = 0;
     CData/*4:0*/ __VdlyDim0__soc_top__DOT__cpu__DOT__picorv32_core__DOT__cpuregs__v0;
@@ -923,6 +927,8 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
     __Vdly__soc_top__DOT__cpu__DOT__picorv32_core__DOT__reg_op1 
         = vlSelfRef.soc_top__DOT__cpu__DOT__picorv32_core__DOT__reg_op1;
     __VdlySet__soc_top__DOT__cpu__DOT__picorv32_core__DOT__cpuregs__v0 = 0U;
+    __Vdly__soc_top__DOT__s1_mac__DOT__res_reg = vlSelfRef.soc_top__DOT__s1_mac__DOT__res_reg;
+    __Vdly__soc_top__DOT__s1_mac__DOT__ctrl_reg = vlSelfRef.soc_top__DOT__s1_mac__DOT__ctrl_reg;
     __Vdly__soc_top__DOT__cpu__DOT__picorv32_core__DOT__mem_state 
         = vlSelfRef.soc_top__DOT__cpu__DOT__picorv32_core__DOT__mem_state;
     if ((((IData)(vlSelfRef.soc_top__DOT__cpu_resetn) 
@@ -1115,13 +1121,16 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
         } else if (vlSelfRef.soc_top__DOT__s1_axi_rready) {
             vlSelfRef.soc_top__DOT__s1_mac__DOT__S_AXI_RVALID = 0U;
         }
-        if ((1U & vlSelfRef.soc_top__DOT__s1_mac__DOT__ctrl_reg)) {
-            vlSelfRef.soc_top__DOT__s1_mac__DOT__res_reg 
+        if ((4U & vlSelfRef.soc_top__DOT__s1_mac__DOT__ctrl_reg)) {
+            __Vdly__soc_top__DOT__s1_mac__DOT__res_reg = 0U;
+            __Vdly__soc_top__DOT__s1_mac__DOT__ctrl_reg = 0U;
+        } else if ((1U & vlSelfRef.soc_top__DOT__s1_mac__DOT__ctrl_reg)) {
+            __Vdly__soc_top__DOT__s1_mac__DOT__res_reg 
                 = (vlSelfRef.soc_top__DOT__s1_mac__DOT__res_reg 
                    + (((- (IData)((1U & ((IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT__prod_val) 
                                          >> 0xfU)))) 
                        << 0x10U) | (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT__prod_val)));
-            vlSelfRef.soc_top__DOT__s1_mac__DOT__ctrl_reg = 2U;
+            __Vdly__soc_top__DOT__s1_mac__DOT__ctrl_reg = 2U;
         }
         if ((((IData)(vlSelfRef.soc_top__DOT__s1_axi_awvalid) 
               & (IData)(vlSelfRef.soc_top__DOT__s1_axi_wvalid)) 
@@ -1129,7 +1138,7 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
             vlSelfRef.soc_top__DOT__s1_mac__DOT__S_AXI_BVALID = 1U;
             vlSelfRef.soc_top__DOT__s1_mac__DOT__S_AXI_BRESP = 0U;
             if ((0U == (0xfU & vlSelfRef.soc_top__DOT__cpu__DOT__picorv32_core__DOT__mem_addr))) {
-                vlSelfRef.soc_top__DOT__s1_mac__DOT__ctrl_reg 
+                __Vdly__soc_top__DOT__s1_mac__DOT__ctrl_reg 
                     = vlSelfRef.soc_top__DOT__mem_axi_wdata;
             } else if ((4U == (0xfU & vlSelfRef.soc_top__DOT__cpu__DOT__picorv32_core__DOT__mem_addr))) {
                 vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_reg 
@@ -1151,10 +1160,10 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
         vlSelfRef.soc_top__DOT__r_route_s1 = 0U;
         vlSelfRef.soc_top__DOT__s1_mac__DOT__S_AXI_RVALID = 0U;
         vlSelfRef.soc_top__DOT__s1_mac__DOT__S_AXI_RDATA = 0U;
-        vlSelfRef.soc_top__DOT__s1_mac__DOT__ctrl_reg = 0U;
-        vlSelfRef.soc_top__DOT__s1_mac__DOT__res_reg = 0U;
+        __Vdly__soc_top__DOT__s1_mac__DOT__ctrl_reg = 0U;
         vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_reg = 0U;
         vlSelfRef.soc_top__DOT__s1_mac__DOT__act_reg = 0U;
+        __Vdly__soc_top__DOT__s1_mac__DOT__res_reg = 0U;
         vlSelfRef.soc_top__DOT__s1_mac__DOT__S_AXI_BVALID = 0U;
     }
     if ((1U & (~ ((~ (IData)(vlSelfRef.soc_top__DOT__cpu_resetn)) 
@@ -1323,6 +1332,8 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
         = vlSelfRef.resetn;
     vlSelfRef.soc_top__DOT__cpu__DOT__axi_adapter__DOT__mem_wdata 
         = vlSelfRef.soc_top__DOT__cpu__DOT__mem_wdata;
+    vlSelfRef.soc_top__DOT__s1_mac__DOT__ctrl_reg = __Vdly__soc_top__DOT__s1_mac__DOT__ctrl_reg;
+    vlSelfRef.soc_top__DOT__s1_mac__DOT__res_reg = __Vdly__soc_top__DOT__s1_mac__DOT__res_reg;
     vlSelfRef.soc_top__DOT__mem_axi_wdata = vlSelfRef.soc_top__DOT__cpu__DOT__picorv32_core__DOT__mem_wdata;
     vlSelfRef.soc_top__DOT__s0_axi_arready = vlSelfRef.soc_top__DOT__s0_ram__DOT__S_AXI_ARREADY;
     vlSelfRef.soc_top__DOT__cpu__DOT__picorv32_core__DOT__dbg_insn_opcode 

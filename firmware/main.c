@@ -1,43 +1,35 @@
-#include <stdint.h>
+// firmware/main.c
+#define MAC_CTRL  (*(volatile int*)0x30000000)
+#define MAC_WGT   (*(volatile int*)0x30000004)
+#define MAC_ACT   (*(volatile int*)0x30000008)
+#define MAC_RES   (*(volatile int*)0x3000000C)
 
-// Hardware Register Memory Map (Mapped to Base Address 0x30000000)
-#define MAC_BASE 0x30000000
-#define MAC_CTRL (*(volatile uint32_t*)(MAC_BASE + 0x00)) // Bit 0: Start, Bit 1: Done
-#define MAC_WGT  (*(volatile uint32_t*)(MAC_BASE + 0x04)) // Weight Input
-#define MAC_ACT  (*(volatile uint32_t*)(MAC_BASE + 0x08)) // Activation Input
-#define MAC_RES  (*(volatile uint32_t*)(MAC_BASE + 0x0C)) // Result Output
+#define NUM_NEURONS 2
+#define INPUT_SIZE  4
 
-// Test data: We want to compute (2*3) + (4*5) + (1*2)
-int weights[3]     = {2, 4, 1};
-int activations[3] = {3, 5, 2};
+const char weights[NUM_NEURONS][INPUT_SIZE] = {
+    {2, -3, 5, 1},   // Neuron 0
+    {1, 4, -2, 3}    // Neuron 1
+};
 
-int main() {
-    // 1. Reset the MAC Result to 0 (Assuming your hardware does this on system reset, 
-    // but good practice to ensure state if doing multiple passes).
-    
-    // 2. Loop through the array and feed the hardware
-    for (int i = 0; i < 3; i++) {
-        // Write data to hardware registers
-        MAC_WGT = weights[i];
-        MAC_ACT = activations[i];
+const char inputs[INPUT_SIZE] = {10, 2, 4, 5};
+int layer_outputs[NUM_NEURONS];
+
+void main() {
+    for (int i = 0; i < NUM_NEURONS; i++) {
         
-        // Assert Start Bit (Bit 0)
-        MAC_CTRL = 1;
-        
-        // Wait for Done Bit (Bit 1) to go high
-        while ((MAC_CTRL & 2) == 0) {
-            // Busy wait (In a real system, you'd use interrupts)
+        MAC_CTRL = 2; 
+
+        for (int j = 0; j < INPUT_SIZE; j++) {
+            MAC_WGT = weights[i][j];
+            MAC_ACT = inputs[j];
+            MAC_CTRL = 1;
+            while ((MAC_CTRL & 2) == 0);
         }
-        
-        // De-assert Start Bit
-        MAC_CTRL = 0;
+
+        int raw_sum = MAC_RES;
+        layer_outputs[i] = (raw_sum > 0) ? raw_sum : 0;
     }
-    
-    // 3. Read final result
-    volatile int final_result = MAC_RES;
-    
-    // 4. End program by asserting the trap pin
+     
     asm volatile("ebreak");
-    
-    return 0;
 }
