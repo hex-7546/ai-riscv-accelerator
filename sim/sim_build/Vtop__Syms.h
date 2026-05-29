@@ -39,6 +39,7 @@ class alignas(VL_CACHE_LINE_BYTES)Vtop__Syms final : public VerilatedSyms {
     VerilatedScope __Vscope_soc_top__cpu__picorv32_core;
     VerilatedScope __Vscope_soc_top__s0_ram;
     VerilatedScope __Vscope_soc_top__s1_mac;
+    VerilatedScope __Vscope_soc_top__u_dma;
 
     // SCOPE HIERARCHY
     VerilatedHierarchy __Vhier;

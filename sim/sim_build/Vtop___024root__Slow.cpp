@@ -7,6 +7,11 @@
 #include "Vtop___024root.h"
 
 // Parameter definitions for Vtop___024root
+constexpr CData/*2:0*/ Vtop___024root::soc_top__DOT__u_dma__DOT__IDLE;
+constexpr CData/*2:0*/ Vtop___024root::soc_top__DOT__u_dma__DOT__READ_REQ;
+constexpr CData/*2:0*/ Vtop___024root::soc_top__DOT__u_dma__DOT__READ_WAIT;
+constexpr CData/*2:0*/ Vtop___024root::soc_top__DOT__u_dma__DOT__WRITE_REQ;
+constexpr CData/*2:0*/ Vtop___024root::soc_top__DOT__u_dma__DOT__WRITE_WAIT;
 constexpr CData/*0:0*/ Vtop___024root::soc_top__DOT__cpu__DOT__ENABLE_COUNTERS;
 constexpr CData/*0:0*/ Vtop___024root::soc_top__DOT__cpu__DOT__ENABLE_COUNTERS64;
 constexpr CData/*0:0*/ Vtop___024root::soc_top__DOT__cpu__DOT__ENABLE_REGS_16_31;
@@ -57,6 +62,9 @@ constexpr CData/*7:0*/ Vtop___024root::soc_top__DOT__cpu__DOT__picorv32_core__DO
 constexpr CData/*7:0*/ Vtop___024root::soc_top__DOT__cpu__DOT__picorv32_core__DOT__cpu_state_shift;
 constexpr CData/*7:0*/ Vtop___024root::soc_top__DOT__cpu__DOT__picorv32_core__DOT__cpu_state_stmem;
 constexpr CData/*7:0*/ Vtop___024root::soc_top__DOT__cpu__DOT__picorv32_core__DOT__cpu_state_ldmem;
+constexpr CData/*1:0*/ Vtop___024root::soc_top__DOT__s1_mac__DOT__STATE_IDLE;
+constexpr CData/*1:0*/ Vtop___024root::soc_top__DOT__s1_mac__DOT__STATE_COMPUTE;
+constexpr CData/*1:0*/ Vtop___024root::soc_top__DOT__s1_mac__DOT__STATE_DONE;
 constexpr IData/*31:0*/ Vtop___024root::soc_top__DOT__cpu__DOT__MASKED_IRQ;
 constexpr IData/*31:0*/ Vtop___024root::soc_top__DOT__cpu__DOT__LATCHED_IRQ;
 constexpr IData/*31:0*/ Vtop___024root::soc_top__DOT__cpu__DOT__PROGADDR_RESET;

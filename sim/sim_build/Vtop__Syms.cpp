@@ -14,6 +14,7 @@ Vtop__Syms::~Vtop__Syms()
     __Vhier.remove(&__Vscope_soc_top, &__Vscope_soc_top__cpu);
     __Vhier.remove(&__Vscope_soc_top, &__Vscope_soc_top__s0_ram);
     __Vhier.remove(&__Vscope_soc_top, &__Vscope_soc_top__s1_mac);
+    __Vhier.remove(&__Vscope_soc_top, &__Vscope_soc_top__u_dma);
     __Vhier.remove(&__Vscope_soc_top__cpu, &__Vscope_soc_top__cpu__axi_adapter);
     __Vhier.remove(&__Vscope_soc_top__cpu, &__Vscope_soc_top__cpu__picorv32_core);
 
@@ -27,7 +28,7 @@ Vtop__Syms::Vtop__Syms(VerilatedContext* contextp, const char* namep, Vtop* mode
     , TOP{this, namep}
 {
         // Check resources
-        Verilated::stackCheck(175);
+        Verilated::stackCheck(245);
     // Configure time unit / time precision
     _vm_contextp__->timeunit(-9);
     _vm_contextp__->timeprecision(-12);
@@ -42,12 +43,14 @@ Vtop__Syms::Vtop__Syms(VerilatedContext* contextp, const char* namep, Vtop* mode
     __Vscope_soc_top__cpu__picorv32_core.configure(this, name(), "soc_top.cpu.picorv32_core", "picorv32_core", "picorv32", -9, VerilatedScope::SCOPE_MODULE);
     __Vscope_soc_top__s0_ram.configure(this, name(), "soc_top.s0_ram", "s0_ram", "axi4_lite_ram", -9, VerilatedScope::SCOPE_MODULE);
     __Vscope_soc_top__s1_mac.configure(this, name(), "soc_top.s1_mac", "s1_mac", "axi4_lite_mac", -9, VerilatedScope::SCOPE_MODULE);
+    __Vscope_soc_top__u_dma.configure(this, name(), "soc_top.u_dma", "u_dma", "dma_controller", -9, VerilatedScope::SCOPE_MODULE);
 
     // Set up scope hierarchy
     __Vhier.add(0, &__Vscope_soc_top);
     __Vhier.add(&__Vscope_soc_top, &__Vscope_soc_top__cpu);
     __Vhier.add(&__Vscope_soc_top, &__Vscope_soc_top__s0_ram);
     __Vhier.add(&__Vscope_soc_top, &__Vscope_soc_top__s1_mac);
+    __Vhier.add(&__Vscope_soc_top, &__Vscope_soc_top__u_dma);
     __Vhier.add(&__Vscope_soc_top__cpu, &__Vscope_soc_top__cpu__axi_adapter);
     __Vhier.add(&__Vscope_soc_top__cpu, &__Vscope_soc_top__cpu__picorv32_core);
 
@@ -57,9 +60,39 @@ Vtop__Syms::Vtop__Syms(VerilatedContext* contextp, const char* namep, Vtop* mode
         __Vscope_TOP.varInsert(__Vfinal,"resetn", &(TOP.resetn), false, VLVT_UINT8,VLVD_IN|VLVF_PUB_RW,0,0);
         __Vscope_TOP.varInsert(__Vfinal,"trap", &(TOP.trap), false, VLVT_UINT8,VLVD_OUT|VLVF_PUB_RW,0,0);
         __Vscope_soc_top.varInsert(__Vfinal,"clk", &(TOP.soc_top__DOT__clk), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"cpu_axi_araddr", &(TOP.soc_top__DOT__cpu_axi_araddr), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"cpu_axi_arprot", &(TOP.soc_top__DOT__cpu_axi_arprot), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,2,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"cpu_axi_arready", &(TOP.soc_top__DOT__cpu_axi_arready), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"cpu_axi_arvalid", &(TOP.soc_top__DOT__cpu_axi_arvalid), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"cpu_axi_awaddr", &(TOP.soc_top__DOT__cpu_axi_awaddr), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"cpu_axi_awprot", &(TOP.soc_top__DOT__cpu_axi_awprot), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,2,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"cpu_axi_awready", &(TOP.soc_top__DOT__cpu_axi_awready), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"cpu_axi_awvalid", &(TOP.soc_top__DOT__cpu_axi_awvalid), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"cpu_axi_bready", &(TOP.soc_top__DOT__cpu_axi_bready), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"cpu_axi_bresp", &(TOP.soc_top__DOT__cpu_axi_bresp), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,1,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"cpu_axi_bvalid", &(TOP.soc_top__DOT__cpu_axi_bvalid), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"cpu_axi_rdata", &(TOP.soc_top__DOT__cpu_axi_rdata), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"cpu_axi_rready", &(TOP.soc_top__DOT__cpu_axi_rready), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"cpu_axi_rresp", &(TOP.soc_top__DOT__cpu_axi_rresp), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,1,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"cpu_axi_rvalid", &(TOP.soc_top__DOT__cpu_axi_rvalid), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"cpu_axi_wdata", &(TOP.soc_top__DOT__cpu_axi_wdata), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"cpu_axi_wready", &(TOP.soc_top__DOT__cpu_axi_wready), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"cpu_axi_wstrb", &(TOP.soc_top__DOT__cpu_axi_wstrb), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,3,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"cpu_axi_wvalid", &(TOP.soc_top__DOT__cpu_axi_wvalid), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
         __Vscope_soc_top.varInsert(__Vfinal,"cpu_resetn", &(TOP.soc_top__DOT__cpu_resetn), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
-        __Vscope_soc_top.varInsert(__Vfinal,"current_r_route", &(TOP.soc_top__DOT__current_r_route), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
-        __Vscope_soc_top.varInsert(__Vfinal,"current_w_route", &(TOP.soc_top__DOT__current_w_route), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"cur_r_route", &(TOP.soc_top__DOT__cur_r_route), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,1,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"cur_w_route", &(TOP.soc_top__DOT__cur_w_route), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,1,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"dma_bus_addr", &(TOP.soc_top__DOT__dma_bus_addr), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"dma_bus_read", &(TOP.soc_top__DOT__dma_bus_read), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"dma_bus_wdata", &(TOP.soc_top__DOT__dma_bus_wdata), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"dma_bus_write", &(TOP.soc_top__DOT__dma_bus_write), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"dma_busy", &(TOP.soc_top__DOT__dma_busy), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"dma_done", &(TOP.soc_top__DOT__dma_done), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"dma_dst_addr", &(TOP.soc_top__DOT__dma_dst_addr), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"dma_len", &(TOP.soc_top__DOT__dma_len), false, VLVT_UINT16,VLVD_NODIR|VLVF_PUB_RW,0,1 ,15,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"dma_mode", &(TOP.soc_top__DOT__dma_mode), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"dma_src_addr", &(TOP.soc_top__DOT__dma_src_addr), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"dma_start", &(TOP.soc_top__DOT__dma_start), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
         __Vscope_soc_top.varInsert(__Vfinal,"mem_axi_araddr", &(TOP.soc_top__DOT__mem_axi_araddr), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
         __Vscope_soc_top.varInsert(__Vfinal,"mem_axi_arprot", &(TOP.soc_top__DOT__mem_axi_arprot), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,2,0);
         __Vscope_soc_top.varInsert(__Vfinal,"mem_axi_arready", &(TOP.soc_top__DOT__mem_axi_arready), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
@@ -79,7 +112,7 @@ Vtop__Syms::Vtop__Syms(VerilatedContext* contextp, const char* namep, Vtop* mode
         __Vscope_soc_top.varInsert(__Vfinal,"mem_axi_wready", &(TOP.soc_top__DOT__mem_axi_wready), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
         __Vscope_soc_top.varInsert(__Vfinal,"mem_axi_wstrb", &(TOP.soc_top__DOT__mem_axi_wstrb), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,3,0);
         __Vscope_soc_top.varInsert(__Vfinal,"mem_axi_wvalid", &(TOP.soc_top__DOT__mem_axi_wvalid), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
-        __Vscope_soc_top.varInsert(__Vfinal,"r_route_s1", &(TOP.soc_top__DOT__r_route_s1), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"r_route", &(TOP.soc_top__DOT__r_route), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,1,0);
         __Vscope_soc_top.varInsert(__Vfinal,"reset_counter", &(TOP.soc_top__DOT__reset_counter), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,7,0);
         __Vscope_soc_top.varInsert(__Vfinal,"resetn", &(TOP.soc_top__DOT__resetn), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
         __Vscope_soc_top.varInsert(__Vfinal,"s0_axi_arready", &(TOP.soc_top__DOT__s0_axi_arready), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
@@ -108,8 +141,24 @@ Vtop__Syms::Vtop__Syms(VerilatedContext* contextp, const char* namep, Vtop* mode
         __Vscope_soc_top.varInsert(__Vfinal,"s1_axi_rvalid", &(TOP.soc_top__DOT__s1_axi_rvalid), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
         __Vscope_soc_top.varInsert(__Vfinal,"s1_axi_wready", &(TOP.soc_top__DOT__s1_axi_wready), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
         __Vscope_soc_top.varInsert(__Vfinal,"s1_axi_wvalid", &(TOP.soc_top__DOT__s1_axi_wvalid), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"s2_axi_arready", &(TOP.soc_top__DOT__s2_axi_arready), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"s2_axi_arvalid", &(TOP.soc_top__DOT__s2_axi_arvalid), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"s2_axi_awready", &(TOP.soc_top__DOT__s2_axi_awready), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"s2_axi_awvalid", &(TOP.soc_top__DOT__s2_axi_awvalid), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"s2_axi_bready", &(TOP.soc_top__DOT__s2_axi_bready), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"s2_axi_bresp", &(TOP.soc_top__DOT__s2_axi_bresp), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,1,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"s2_axi_bvalid", &(TOP.soc_top__DOT__s2_axi_bvalid), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"s2_axi_rdata", &(TOP.soc_top__DOT__s2_axi_rdata), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"s2_axi_rready", &(TOP.soc_top__DOT__s2_axi_rready), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"s2_axi_rresp", &(TOP.soc_top__DOT__s2_axi_rresp), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,1,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"s2_axi_rvalid", &(TOP.soc_top__DOT__s2_axi_rvalid), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"s2_axi_wready", &(TOP.soc_top__DOT__s2_axi_wready), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"s2_axi_wvalid", &(TOP.soc_top__DOT__s2_axi_wvalid), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"s2_bvalid_reg", &(TOP.soc_top__DOT__s2_bvalid_reg), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"s2_rdata_reg", &(TOP.soc_top__DOT__s2_rdata_reg), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"s2_rvalid_reg", &(TOP.soc_top__DOT__s2_rvalid_reg), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
         __Vscope_soc_top.varInsert(__Vfinal,"trap", &(TOP.soc_top__DOT__trap), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
-        __Vscope_soc_top.varInsert(__Vfinal,"w_route_s1", &(TOP.soc_top__DOT__w_route_s1), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top.varInsert(__Vfinal,"w_route", &(TOP.soc_top__DOT__w_route), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,1,0);
         __Vscope_soc_top__cpu.varInsert(__Vfinal,"BARREL_SHIFTER", const_cast<void*>(static_cast<const void*>(&(TOP.soc_top__DOT__cpu__DOT__BARREL_SHIFTER))), true, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,0,0);
         __Vscope_soc_top__cpu.varInsert(__Vfinal,"CATCH_ILLINSN", const_cast<void*>(static_cast<const void*>(&(TOP.soc_top__DOT__cpu__DOT__CATCH_ILLINSN))), true, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,0,0);
         __Vscope_soc_top__cpu.varInsert(__Vfinal,"CATCH_MISALIGN", const_cast<void*>(static_cast<const void*>(&(TOP.soc_top__DOT__cpu__DOT__CATCH_MISALIGN))), true, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,0,0);
@@ -500,6 +549,9 @@ Vtop__Syms::Vtop__Syms(VerilatedContext* contextp, const char* namep, Vtop* mode
         __Vscope_soc_top__s0_ram.varInsert(__Vfinal,"mem_8bit", &(TOP.soc_top__DOT__s0_ram__DOT__mem_8bit), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,1,1 ,0,32767 ,7,0);
         __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"C_S_AXI_ADDR_WIDTH", const_cast<void*>(static_cast<const void*>(&(TOP.soc_top__DOT__s1_mac__DOT__C_S_AXI_ADDR_WIDTH))), true, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
         __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"C_S_AXI_DATA_WIDTH", const_cast<void*>(static_cast<const void*>(&(TOP.soc_top__DOT__s1_mac__DOT__C_S_AXI_DATA_WIDTH))), true, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"STATE_COMPUTE", const_cast<void*>(static_cast<const void*>(&(TOP.soc_top__DOT__s1_mac__DOT__STATE_COMPUTE))), true, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,1,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"STATE_DONE", const_cast<void*>(static_cast<const void*>(&(TOP.soc_top__DOT__s1_mac__DOT__STATE_DONE))), true, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,1,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"STATE_IDLE", const_cast<void*>(static_cast<const void*>(&(TOP.soc_top__DOT__s1_mac__DOT__STATE_IDLE))), true, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,1,0);
         __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"S_AXI_ACLK", &(TOP.soc_top__DOT__s1_mac__DOT__S_AXI_ACLK), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
         __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"S_AXI_ARADDR", &(TOP.soc_top__DOT__s1_mac__DOT__S_AXI_ARADDR), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,3,0);
         __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"S_AXI_ARESETN", &(TOP.soc_top__DOT__s1_mac__DOT__S_AXI_ARESETN), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
@@ -521,12 +573,48 @@ Vtop__Syms::Vtop__Syms(VerilatedContext* contextp, const char* namep, Vtop* mode
         __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"S_AXI_WREADY", &(TOP.soc_top__DOT__s1_mac__DOT__S_AXI_WREADY), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
         __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"S_AXI_WSTRB", &(TOP.soc_top__DOT__s1_mac__DOT__S_AXI_WSTRB), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,3,0);
         __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"S_AXI_WVALID", &(TOP.soc_top__DOT__s1_mac__DOT__S_AXI_WVALID), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
-        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"a_val", &(TOP.soc_top__DOT__s1_mac__DOT__a_val), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,7,0);
-        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"act_reg", &(TOP.soc_top__DOT__s1_mac__DOT__act_reg), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
-        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"ctrl_reg", &(TOP.soc_top__DOT__s1_mac__DOT__ctrl_reg), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
-        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"prod_val", &(TOP.soc_top__DOT__s1_mac__DOT__prod_val), false, VLVT_UINT16,VLVD_NODIR|VLVF_PUB_RW,0,1 ,15,0);
-        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"res_reg", &(TOP.soc_top__DOT__s1_mac__DOT__res_reg), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
-        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"w_val", &(TOP.soc_top__DOT__s1_mac__DOT__w_val), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,7,0);
-        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"wgt_reg", &(TOP.soc_top__DOT__s1_mac__DOT__wgt_reg), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"accumulator", &(TOP.soc_top__DOT__s1_mac__DOT__accumulator), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"act_buffer", &(TOP.soc_top__DOT__s1_mac__DOT__act_buffer), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,1,1 ,0,63 ,31,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"act_wr_ptr", &(TOP.soc_top__DOT__s1_mac__DOT__act_wr_ptr), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,5,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"axi_arready", &(TOP.soc_top__DOT__s1_mac__DOT__axi_arready), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"axi_awready", &(TOP.soc_top__DOT__s1_mac__DOT__axi_awready), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"axi_bvalid", &(TOP.soc_top__DOT__s1_mac__DOT__axi_bvalid), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"axi_rdata", &(TOP.soc_top__DOT__s1_mac__DOT__axi_rdata), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"axi_rvalid", &(TOP.soc_top__DOT__s1_mac__DOT__axi_rvalid), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"axi_wready", &(TOP.soc_top__DOT__s1_mac__DOT__axi_wready), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"compute_ptr", &(TOP.soc_top__DOT__s1_mac__DOT__compute_ptr), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,5,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"slv_reg_rden", &(TOP.soc_top__DOT__s1_mac__DOT__slv_reg_rden), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"slv_reg_wren", &(TOP.soc_top__DOT__s1_mac__DOT__slv_reg_wren), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"state", &(TOP.soc_top__DOT__s1_mac__DOT__state), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,1,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"vector_len", &(TOP.soc_top__DOT__s1_mac__DOT__vector_len), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"wgt_buffer", &(TOP.soc_top__DOT__s1_mac__DOT__wgt_buffer), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,1,1 ,0,63 ,31,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"wgt_wr_ptr", &(TOP.soc_top__DOT__s1_mac__DOT__wgt_wr_ptr), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,5,0);
+        __Vscope_soc_top__u_dma.varInsert(__Vfinal,"IDLE", const_cast<void*>(static_cast<const void*>(&(TOP.soc_top__DOT__u_dma__DOT__IDLE))), true, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,2,0);
+        __Vscope_soc_top__u_dma.varInsert(__Vfinal,"READ_REQ", const_cast<void*>(static_cast<const void*>(&(TOP.soc_top__DOT__u_dma__DOT__READ_REQ))), true, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,2,0);
+        __Vscope_soc_top__u_dma.varInsert(__Vfinal,"READ_WAIT", const_cast<void*>(static_cast<const void*>(&(TOP.soc_top__DOT__u_dma__DOT__READ_WAIT))), true, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,2,0);
+        __Vscope_soc_top__u_dma.varInsert(__Vfinal,"WRITE_REQ", const_cast<void*>(static_cast<const void*>(&(TOP.soc_top__DOT__u_dma__DOT__WRITE_REQ))), true, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,2,0);
+        __Vscope_soc_top__u_dma.varInsert(__Vfinal,"WRITE_WAIT", const_cast<void*>(static_cast<const void*>(&(TOP.soc_top__DOT__u_dma__DOT__WRITE_WAIT))), true, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,2,0);
+        __Vscope_soc_top__u_dma.varInsert(__Vfinal,"bus_addr", &(TOP.soc_top__DOT__u_dma__DOT__bus_addr), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_soc_top__u_dma.varInsert(__Vfinal,"bus_rdata", &(TOP.soc_top__DOT__u_dma__DOT__bus_rdata), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_soc_top__u_dma.varInsert(__Vfinal,"bus_read", &(TOP.soc_top__DOT__u_dma__DOT__bus_read), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top__u_dma.varInsert(__Vfinal,"bus_ready", &(TOP.soc_top__DOT__u_dma__DOT__bus_ready), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top__u_dma.varInsert(__Vfinal,"bus_wdata", &(TOP.soc_top__DOT__u_dma__DOT__bus_wdata), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_soc_top__u_dma.varInsert(__Vfinal,"bus_write", &(TOP.soc_top__DOT__u_dma__DOT__bus_write), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top__u_dma.varInsert(__Vfinal,"clk", &(TOP.soc_top__DOT__u_dma__DOT__clk), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top__u_dma.varInsert(__Vfinal,"count", &(TOP.soc_top__DOT__u_dma__DOT__count), false, VLVT_UINT16,VLVD_NODIR|VLVF_PUB_RW,0,1 ,15,0);
+        __Vscope_soc_top__u_dma.varInsert(__Vfinal,"cpu_dst_addr", &(TOP.soc_top__DOT__u_dma__DOT__cpu_dst_addr), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_soc_top__u_dma.varInsert(__Vfinal,"cpu_mode", &(TOP.soc_top__DOT__u_dma__DOT__cpu_mode), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top__u_dma.varInsert(__Vfinal,"cpu_src_addr", &(TOP.soc_top__DOT__u_dma__DOT__cpu_src_addr), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_soc_top__u_dma.varInsert(__Vfinal,"cpu_start", &(TOP.soc_top__DOT__u_dma__DOT__cpu_start), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top__u_dma.varInsert(__Vfinal,"cpu_transfer_len", &(TOP.soc_top__DOT__u_dma__DOT__cpu_transfer_len), false, VLVT_UINT16,VLVD_NODIR|VLVF_PUB_RW,0,1 ,15,0);
+        __Vscope_soc_top__u_dma.varInsert(__Vfinal,"dma_busy", &(TOP.soc_top__DOT__u_dma__DOT__dma_busy), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top__u_dma.varInsert(__Vfinal,"dma_done", &(TOP.soc_top__DOT__u_dma__DOT__dma_done), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top__u_dma.varInsert(__Vfinal,"dst_ptr", &(TOP.soc_top__DOT__u_dma__DOT__dst_ptr), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_soc_top__u_dma.varInsert(__Vfinal,"holding_reg", &(TOP.soc_top__DOT__u_dma__DOT__holding_reg), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_soc_top__u_dma.varInsert(__Vfinal,"rst_n", &(TOP.soc_top__DOT__u_dma__DOT__rst_n), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_soc_top__u_dma.varInsert(__Vfinal,"src_ptr", &(TOP.soc_top__DOT__u_dma__DOT__src_ptr), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_soc_top__u_dma.varInsert(__Vfinal,"state", &(TOP.soc_top__DOT__u_dma__DOT__state), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,2,0);
+        __Vscope_soc_top__u_dma.varInsert(__Vfinal,"unpack_cnt", &(TOP.soc_top__DOT__u_dma__DOT__unpack_cnt), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,1,0);
+        __Vscope_soc_top__u_dma.varInsert(__Vfinal,"unpack_mode", &(TOP.soc_top__DOT__u_dma__DOT__unpack_mode), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
     }
 }
