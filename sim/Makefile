@@ -36,7 +36,7 @@ include $(shell cocotb-config --makefiles)/Makefile.sim
 .PHONY: firmware
 firmware:
 	@echo "Compiling RISC-V Firmware..."
-	riscv64-unknown-elf-gcc -O2 -mabi=ilp32 -march=rv32i -ffreestanding -nostdlib -T $(FW_DIR)/sections.lds $(FW_DIR)/start.S $(FW_DIR)/main.c -o $(FW_DIR)/firmware.elf
+	riscv64-unknown-elf-gcc -O2 -mabi=ilp32 -march=rv32i -ffreestanding -nostdlib -T $(FW_DIR)/sections.lds $(FW_DIR)/start.S $(FW_DIR)/main.c -o $(FW_DIR)/firmware.elf -lgcc
 	riscv64-unknown-elf-objcopy -O verilog $(FW_DIR)/firmware.elf $(FW_DIR)/firmware.hex
 	@echo "Firmware compilation complete."
 

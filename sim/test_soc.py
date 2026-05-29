@@ -1,50 +1,79 @@
 import cocotb
 from cocotb.clock import Clock
-from cocotb.triggers import Timer, RisingEdge, ClockCycles
+from cocotb.triggers import Timer, RisingEdge
 
 @cocotb.test()
 async def test_riscv_mac_integration(dut):
-    """Test full system integration: PicoRV32 -> AXI -> MAC Accelerator"""
+    """ Test Full Multi-Layer AI Inference with Auto-Reset Handling """
     
-    # 1. Start a 50MHz Clock on the 'clk' pin (20ns period)
-    clock = Clock(dut.clk, 20, units="ns")
-    cocotb.start_soon(clock.start())
+    # 1. Start the system clock generator (50 MHz)
+    cocotb.start_soon(Clock(dut.clk, 20, unit="ns").start())
     
-    # 2. System Reset Sequence
-    dut.resetn.value = 0 # Assert active-low reset
-    await Timer(100, units="ns")
-    dut.resetn.value = 1 # Release reset
+    # 2. Dynamic Reset Controller Block
+    reset_pin = None
+    for name in ["resetn", "rst_n", "rst", "reset"]:
+        if hasattr(dut, name):
+            reset_pin = getattr(dut, name)
+            break
+            
+    if reset_pin is not None:
+        # Determine if pin is active-low (contains 'n') or active-high
+        is_active_low = "n" in reset_pin._name.lower()
+        dut._log.info(f"Identified reset line: '{reset_pin._name}' (Active-{'Low' if is_active_low else 'High'})")
+        
+        # Drive Reset Active
+        reset_pin.value = 0 if is_active_low else 1
+        await Timer(100, unit="ns")
+        
+        # Release Reset Active
+        reset_pin.value = 1 if is_active_low else 0
+        dut._log.info("Hardware reset signal toggled successfully.")
+    else:
+        dut._log.warning("No top-level reset signal identified on the DUT wrapper.")
+        await Timer(100, unit="ns")
     
-    dut._log.info("Reset released. Waiting for PicoRV32 reset stretcher to finish...")
-    
-    # 3. Wait for the CPU to wake up (Remember our 255 cycle stretcher?)
-    await ClockCycles(dut.clk, 300)
-    dut._log.info("CPU Awake. Firmware executing...")
+    # Wait for the internal hardware reset stretcher circuit to cycle through
+    dut._log.info("Waiting for hardware reset stretcher to finish...")
+    await Timer(6000, unit="ns") 
+    dut._log.info("CPU Awake. Executing Neural Network Inference...")
 
-    # 4. Monitor execution
-    # We wait for up to 5000 clock cycles for the C code to finish the math
-    max_cycles = 5000
+    # 3. Cycle-Accurate Polling Engine
+    max_cycles = 150000
     for i in range(max_cycles):
         await RisingEdge(dut.clk)
         
-        # Check if the CPU hit the trap state (the end of our C program)
-        if dut.trap.value == 1:
-            dut._log.info(f"CPU Trapped at cycle {i}.")
+        # Break immediately if the CPU hits the software ebreak trap
+        if dut.cpu.picorv32_core.trap.value == 1:
+            dut._log.info(f"CPU Trapped at cycle {i} - Inference Complete!")
+            break
             
-            # Since Cocotb can peek inside the Verilog hierarchy, 
-            # let's directly read the hardware MAC accumulator register to verify
-            # Note: You may need to change 's1_mac' and 'mac_result' to match 
-            # exactly what you named them in your Verilog code.
-            try:
-                hardware_result = dut.s1_mac.res_reg.value.to_unsigned()
-                dut._log.info(f"Final Hardware Accumulator Value: {hardware_result}")
-                
-                assert hardware_result == 64, f"Math failed! Expected 25, got {hardware_result}"
-                dut._log.info("SUCCESS: RISC-V to MAC Integration passed.")
-                return
-            except AttributeError:
-                dut._log.warning("Could not probe internal MAC register. Checking only trap state.")
-                return
-                
-    # If we get here, the loop timed out
-    assert False, f"Simulation timeout: CPU did not finish within {max_cycles} cycles."
+    # 4. Post-Inference Failure Diagnostics
+    if dut.cpu.picorv32_core.trap.value != 1:
+        current_pc = hex(dut.cpu.picorv32_core.reg_pc.value.to_unsigned())
+        dut._log.error("==================================================")
+        dut._log.error(" 🚨 DIAGNOSTIC CRASH DUMP")
+        dut._log.error(f" CPU failed to finish! Final Program Counter (PC): {current_pc}")
+        dut._log.error(f" Hardware Trap State: {dut.cpu.picorv32_core.trap.value}")
+        dut._log.error("==================================================")
+        assert False, f"Simulation timed out after {max_cycles} cycles!"
+
+    # 5. Harvest Final Target Output Metrics
+    positive_score = dut.s1_mac.wgt_reg.value.signed_integer
+    negative_score = dut.s1_mac.act_reg.value.signed_integer
+
+    dut._log.info("==================================================")
+    dut._log.info(" 📝 AI TEXT INFERENCE RESULTS")
+    dut._log.info(" Input: 'This hardware project is excellent'")
+    dut._log.info("--------------------------------------------------")
+    dut._log.info(f" Positive Class Score : {positive_score}")
+    dut._log.info(f" Negative Class Score : {negative_score}")
+    dut._log.info("==================================================")
+    
+    if positive_score > negative_score:
+        dut._log.info(" 🤖 AI PREDICTION: ➔ POSITIVE SENTIMENT")
+    else:
+        dut._log.info(" 🤖 AI PREDICTION: ➔ NEGATIVE SENTIMENT")
+        
+    dut._log.info("==================================================")
+
+    assert positive_score > negative_score, "Network failed to classify correctly!"
