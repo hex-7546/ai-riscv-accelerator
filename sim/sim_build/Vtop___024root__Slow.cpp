@@ -84,6 +84,14 @@ constexpr IData/*31:0*/ Vtop___024root::soc_top__DOT__cpu__DOT__picorv32_core__D
 constexpr IData/*31:0*/ Vtop___024root::soc_top__DOT__s0_ram__DOT__MEM_SIZE;
 constexpr IData/*31:0*/ Vtop___024root::soc_top__DOT__s1_mac__DOT__C_S_AXI_DATA_WIDTH;
 constexpr IData/*31:0*/ Vtop___024root::soc_top__DOT__s1_mac__DOT__C_S_AXI_ADDR_WIDTH;
+constexpr IData/*31:0*/ Vtop___024root::soc_top__DOT__s1_mac__DOT__pe0__DOT__D_WIDTH;
+constexpr IData/*31:0*/ Vtop___024root::soc_top__DOT__s1_mac__DOT__pe0__DOT__ACC_WIDTH;
+constexpr IData/*31:0*/ Vtop___024root::soc_top__DOT__s1_mac__DOT__pe1__DOT__D_WIDTH;
+constexpr IData/*31:0*/ Vtop___024root::soc_top__DOT__s1_mac__DOT__pe1__DOT__ACC_WIDTH;
+constexpr IData/*31:0*/ Vtop___024root::soc_top__DOT__s1_mac__DOT__pe2__DOT__D_WIDTH;
+constexpr IData/*31:0*/ Vtop___024root::soc_top__DOT__s1_mac__DOT__pe2__DOT__ACC_WIDTH;
+constexpr IData/*31:0*/ Vtop___024root::soc_top__DOT__s1_mac__DOT__pe3__DOT__D_WIDTH;
+constexpr IData/*31:0*/ Vtop___024root::soc_top__DOT__s1_mac__DOT__pe3__DOT__ACC_WIDTH;
 constexpr QData/*35:0*/ Vtop___024root::soc_top__DOT__cpu__DOT__picorv32_core__DOT__TRACE_BRANCH;
 constexpr QData/*35:0*/ Vtop___024root::soc_top__DOT__cpu__DOT__picorv32_core__DOT__TRACE_ADDR;
 constexpr QData/*35:0*/ Vtop___024root::soc_top__DOT__cpu__DOT__picorv32_core__DOT__TRACE_IRQ;
