@@ -377,7 +377,6 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
         CData/*0:0*/ soc_top__DOT__s1_mac__DOT__axi_bvalid;
         CData/*0:0*/ soc_top__DOT__s1_mac__DOT__axi_arready;
         CData/*0:0*/ soc_top__DOT__s1_mac__DOT__axi_rvalid;
-        CData/*5:0*/ soc_top__DOT__s1_mac__DOT__wgt_wr_ptr;
         CData/*5:0*/ soc_top__DOT__s1_mac__DOT__act_wr_ptr;
         CData/*1:0*/ soc_top__DOT__s1_mac__DOT__state;
         CData/*5:0*/ soc_top__DOT__s1_mac__DOT__compute_ptr;
@@ -394,6 +393,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
         SData/*15:0*/ soc_top__DOT__u_dma__DOT__cpu_transfer_len;
         SData/*15:0*/ soc_top__DOT__u_dma__DOT__count;
         SData/*15:0*/ soc_top__DOT__cpu__DOT__picorv32_core__DOT__mem_16bit_buffer;
+        SData/*8:0*/ soc_top__DOT__s1_mac__DOT__wgt_wr_ptr;
         IData/*31:0*/ soc_top__DOT__cpu_axi_awaddr;
         IData/*31:0*/ soc_top__DOT__cpu_axi_wdata;
         IData/*31:0*/ soc_top__DOT__cpu_axi_araddr;
@@ -505,6 +505,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
         IData/*31:0*/ soc_top__DOT__s1_mac__DOT__S_AXI_RDATA;
         IData/*31:0*/ soc_top__DOT__s1_mac__DOT__axi_rdata;
         IData/*31:0*/ soc_top__DOT__s1_mac__DOT__vector_len;
+        IData/*31:0*/ soc_top__DOT__s1_mac__DOT__wgt_offset;
         IData/*31:0*/ soc_top__DOT__s1_mac__DOT__accumulator;
         IData/*31:0*/ __VactIterCount;
         QData/*35:0*/ soc_top__DOT__cpu__DOT__trace_data;
@@ -518,7 +519,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
         VlUnpacked<IData/*31:0*/, 32> soc_top__DOT__cpu__DOT__picorv32_core__DOT__cpuregs;
         VlUnpacked<IData/*31:0*/, 8192> soc_top__DOT__s0_ram__DOT__mem;
         VlUnpacked<CData/*7:0*/, 32768> soc_top__DOT__s0_ram__DOT__mem_8bit;
-        VlUnpacked<IData/*31:0*/, 64> soc_top__DOT__s1_mac__DOT__wgt_buffer;
+        VlUnpacked<IData/*31:0*/, 256> soc_top__DOT__s1_mac__DOT__wgt_sram;
         VlUnpacked<IData/*31:0*/, 64> soc_top__DOT__s1_mac__DOT__act_buffer;
     };
     VlTriggerVec<1> __VstlTriggered;

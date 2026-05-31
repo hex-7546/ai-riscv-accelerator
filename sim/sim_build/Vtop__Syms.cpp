@@ -28,7 +28,7 @@ Vtop__Syms::Vtop__Syms(VerilatedContext* contextp, const char* namep, Vtop* mode
     , TOP{this, namep}
 {
         // Check resources
-        Verilated::stackCheck(245);
+        Verilated::stackCheck(247);
     // Configure time unit / time precision
     _vm_contextp__->timeunit(-9);
     _vm_contextp__->timeprecision(-12);
@@ -587,8 +587,9 @@ Vtop__Syms::Vtop__Syms(VerilatedContext* contextp, const char* namep, Vtop* mode
         __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"slv_reg_wren", &(TOP.soc_top__DOT__s1_mac__DOT__slv_reg_wren), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
         __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"state", &(TOP.soc_top__DOT__s1_mac__DOT__state), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,1,0);
         __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"vector_len", &(TOP.soc_top__DOT__s1_mac__DOT__vector_len), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
-        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"wgt_buffer", &(TOP.soc_top__DOT__s1_mac__DOT__wgt_buffer), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,1,1 ,0,63 ,31,0);
-        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"wgt_wr_ptr", &(TOP.soc_top__DOT__s1_mac__DOT__wgt_wr_ptr), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,5,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"wgt_offset", &(TOP.soc_top__DOT__s1_mac__DOT__wgt_offset), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"wgt_sram", &(TOP.soc_top__DOT__s1_mac__DOT__wgt_sram), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,1,1 ,0,255 ,31,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"wgt_wr_ptr", &(TOP.soc_top__DOT__s1_mac__DOT__wgt_wr_ptr), false, VLVT_UINT16,VLVD_NODIR|VLVF_PUB_RW,0,1 ,8,0);
         __Vscope_soc_top__u_dma.varInsert(__Vfinal,"IDLE", const_cast<void*>(static_cast<const void*>(&(TOP.soc_top__DOT__u_dma__DOT__IDLE))), true, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,2,0);
         __Vscope_soc_top__u_dma.varInsert(__Vfinal,"READ_REQ", const_cast<void*>(static_cast<const void*>(&(TOP.soc_top__DOT__u_dma__DOT__READ_REQ))), true, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,2,0);
         __Vscope_soc_top__u_dma.varInsert(__Vfinal,"READ_WAIT", const_cast<void*>(static_cast<const void*>(&(TOP.soc_top__DOT__u_dma__DOT__READ_WAIT))), true, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,2,0);

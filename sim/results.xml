@@ -1,6 +1,6 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1780047553" />
-    <testcase name="test_riscv_vector_mac_integration" classname="test_soc" file="/home/hex/Desktop/INT_ACCEL/sim/test_soc.py" lineno="5" time="0.2149338722229004" sim_time_ns="100620.0" ratio_time="468143.9875407377" />
+    <property name="random_seed" value="1780204765" />
+    <testcase name="test_riscv_vector_mac_integration" classname="test_soc" file="/home/hex/Desktop/INT_ACCEL/sim/test_soc.py" lineno="5" time="0.13500022888183594" sim_time_ns="70740.0" ratio_time="523999.11160089856" />
   </testsuite>
 </testsuites>

@@ -716,17 +716,18 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->soc_top__DOT__s1_mac__DOT__axi_arready = VL_RAND_RESET_I(1);
     vlSelf->soc_top__DOT__s1_mac__DOT__axi_rvalid = VL_RAND_RESET_I(1);
     vlSelf->soc_top__DOT__s1_mac__DOT__axi_rdata = VL_RAND_RESET_I(32);
-    for (int __Vi0 = 0; __Vi0 < 64; ++__Vi0) {
-        vlSelf->soc_top__DOT__s1_mac__DOT__wgt_buffer[__Vi0] = VL_RAND_RESET_I(32);
+    for (int __Vi0 = 0; __Vi0 < 256; ++__Vi0) {
+        vlSelf->soc_top__DOT__s1_mac__DOT__wgt_sram[__Vi0] = VL_RAND_RESET_I(32);
     }
     for (int __Vi0 = 0; __Vi0 < 64; ++__Vi0) {
         vlSelf->soc_top__DOT__s1_mac__DOT__act_buffer[__Vi0] = VL_RAND_RESET_I(32);
     }
-    vlSelf->soc_top__DOT__s1_mac__DOT__wgt_wr_ptr = VL_RAND_RESET_I(6);
+    vlSelf->soc_top__DOT__s1_mac__DOT__wgt_wr_ptr = VL_RAND_RESET_I(9);
     vlSelf->soc_top__DOT__s1_mac__DOT__act_wr_ptr = VL_RAND_RESET_I(6);
     vlSelf->soc_top__DOT__s1_mac__DOT__state = VL_RAND_RESET_I(2);
     vlSelf->soc_top__DOT__s1_mac__DOT__compute_ptr = VL_RAND_RESET_I(6);
     vlSelf->soc_top__DOT__s1_mac__DOT__vector_len = VL_RAND_RESET_I(32);
+    vlSelf->soc_top__DOT__s1_mac__DOT__wgt_offset = VL_RAND_RESET_I(32);
     vlSelf->soc_top__DOT__s1_mac__DOT__accumulator = VL_RAND_RESET_I(32);
     vlSelf->soc_top__DOT__s1_mac__DOT__slv_reg_wren = VL_RAND_RESET_I(1);
     vlSelf->soc_top__DOT__s1_mac__DOT__slv_reg_rden = VL_RAND_RESET_I(1);
