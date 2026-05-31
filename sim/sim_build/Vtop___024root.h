@@ -380,8 +380,43 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
         CData/*5:0*/ soc_top__DOT__s1_mac__DOT__act_wr_ptr;
         CData/*1:0*/ soc_top__DOT__s1_mac__DOT__state;
         CData/*5:0*/ soc_top__DOT__s1_mac__DOT__compute_ptr;
+        CData/*0:0*/ soc_top__DOT__s1_mac__DOT__clear_pes;
+        CData/*7:0*/ soc_top__DOT__s1_mac__DOT____Vcellinp__pe0__wgt_in;
+        CData/*7:0*/ soc_top__DOT__s1_mac__DOT____Vcellinp__pe0__act_in;
+        CData/*7:0*/ soc_top__DOT__s1_mac__DOT____Vcellinp__pe1__wgt_in;
+        CData/*7:0*/ soc_top__DOT__s1_mac__DOT____Vcellinp__pe2__wgt_in;
+        CData/*7:0*/ soc_top__DOT__s1_mac__DOT____Vcellinp__pe3__wgt_in;
         CData/*0:0*/ soc_top__DOT__s1_mac__DOT__slv_reg_wren;
-        CData/*0:0*/ soc_top__DOT__s1_mac__DOT__slv_reg_rden;
+        CData/*0:0*/ soc_top__DOT__s1_mac__DOT__pe0__DOT__clk;
+        CData/*0:0*/ soc_top__DOT__s1_mac__DOT__pe0__DOT__rst_n;
+        CData/*0:0*/ soc_top__DOT__s1_mac__DOT__pe0__DOT__clear;
+        CData/*7:0*/ soc_top__DOT__s1_mac__DOT__pe0__DOT__act_in;
+        CData/*7:0*/ soc_top__DOT__s1_mac__DOT__pe0__DOT__wgt_in;
+        CData/*7:0*/ soc_top__DOT__s1_mac__DOT__pe0__DOT__act_out;
+        CData/*7:0*/ soc_top__DOT__s1_mac__DOT__pe0__DOT__wgt_out;
+        CData/*0:0*/ soc_top__DOT__s1_mac__DOT__pe1__DOT__clk;
+        CData/*0:0*/ soc_top__DOT__s1_mac__DOT__pe1__DOT__rst_n;
+        CData/*0:0*/ soc_top__DOT__s1_mac__DOT__pe1__DOT__clear;
+        CData/*7:0*/ soc_top__DOT__s1_mac__DOT__pe1__DOT__act_in;
+        CData/*7:0*/ soc_top__DOT__s1_mac__DOT__pe1__DOT__wgt_in;
+        CData/*7:0*/ soc_top__DOT__s1_mac__DOT__pe1__DOT__act_out;
+        CData/*7:0*/ soc_top__DOT__s1_mac__DOT__pe1__DOT__wgt_out;
+        CData/*0:0*/ soc_top__DOT__s1_mac__DOT__pe2__DOT__clk;
+        CData/*0:0*/ soc_top__DOT__s1_mac__DOT__pe2__DOT__rst_n;
+        CData/*0:0*/ soc_top__DOT__s1_mac__DOT__pe2__DOT__clear;
+        CData/*7:0*/ soc_top__DOT__s1_mac__DOT__pe2__DOT__act_in;
+        CData/*7:0*/ soc_top__DOT__s1_mac__DOT__pe2__DOT__wgt_in;
+        CData/*7:0*/ soc_top__DOT__s1_mac__DOT__pe2__DOT__act_out;
+        CData/*7:0*/ soc_top__DOT__s1_mac__DOT__pe2__DOT__wgt_out;
+        CData/*0:0*/ soc_top__DOT__s1_mac__DOT__pe3__DOT__clk;
+        CData/*0:0*/ soc_top__DOT__s1_mac__DOT__pe3__DOT__rst_n;
+    };
+    struct {
+        CData/*0:0*/ soc_top__DOT__s1_mac__DOT__pe3__DOT__clear;
+        CData/*7:0*/ soc_top__DOT__s1_mac__DOT__pe3__DOT__act_in;
+        CData/*7:0*/ soc_top__DOT__s1_mac__DOT__pe3__DOT__wgt_in;
+        CData/*7:0*/ soc_top__DOT__s1_mac__DOT__pe3__DOT__act_out;
+        CData/*7:0*/ soc_top__DOT__s1_mac__DOT__pe3__DOT__wgt_out;
         CData/*0:0*/ __Vdly__soc_top__DOT__s2_bvalid_reg;
         CData/*0:0*/ __Vdly__soc_top__DOT__dma_start;
         CData/*0:0*/ __VstlFirstIteration;
@@ -410,8 +445,6 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
         IData/*31:0*/ soc_top__DOT__dma_src_addr;
         IData/*31:0*/ soc_top__DOT__dma_dst_addr;
         IData/*31:0*/ soc_top__DOT__s2_rdata_reg;
-    };
-    struct {
         IData/*31:0*/ soc_top__DOT__u_dma__DOT__cpu_src_addr;
         IData/*31:0*/ soc_top__DOT__u_dma__DOT__cpu_dst_addr;
         IData/*31:0*/ soc_top__DOT__u_dma__DOT__bus_addr;
@@ -443,6 +476,8 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
         IData/*31:0*/ soc_top__DOT__cpu__DOT__picorv32_core__DOT__mem_addr;
         IData/*31:0*/ soc_top__DOT__cpu__DOT__picorv32_core__DOT__mem_wdata;
         IData/*31:0*/ soc_top__DOT__cpu__DOT__picorv32_core__DOT__mem_rdata;
+    };
+    struct {
         IData/*31:0*/ soc_top__DOT__cpu__DOT__picorv32_core__DOT__mem_la_addr;
         IData/*31:0*/ soc_top__DOT__cpu__DOT__picorv32_core__DOT__mem_la_wdata;
         IData/*31:0*/ soc_top__DOT__cpu__DOT__picorv32_core__DOT__pcpi_insn;
@@ -476,8 +511,6 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
         IData/*31:0*/ soc_top__DOT__cpu__DOT__picorv32_core__DOT__mem_rdata_latched;
         IData/*31:0*/ soc_top__DOT__cpu__DOT__picorv32_core__DOT__decoded_imm;
         IData/*31:0*/ soc_top__DOT__cpu__DOT__picorv32_core__DOT__decoded_imm_j;
-    };
-    struct {
         IData/*31:0*/ soc_top__DOT__cpu__DOT__picorv32_core__DOT__dbg_insn_imm;
         IData/*31:0*/ soc_top__DOT__cpu__DOT__picorv32_core__DOT__dbg_rs1val;
         IData/*31:0*/ soc_top__DOT__cpu__DOT__picorv32_core__DOT__dbg_rs2val;
@@ -505,8 +538,16 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
         IData/*31:0*/ soc_top__DOT__s1_mac__DOT__S_AXI_RDATA;
         IData/*31:0*/ soc_top__DOT__s1_mac__DOT__axi_rdata;
         IData/*31:0*/ soc_top__DOT__s1_mac__DOT__vector_len;
-        IData/*31:0*/ soc_top__DOT__s1_mac__DOT__wgt_offset;
-        IData/*31:0*/ soc_top__DOT__s1_mac__DOT__accumulator;
+        IData/*31:0*/ soc_top__DOT__s1_mac__DOT__acc_out_0;
+        IData/*31:0*/ soc_top__DOT__s1_mac__DOT__acc_out_1;
+        IData/*31:0*/ soc_top__DOT__s1_mac__DOT__acc_out_2;
+        IData/*31:0*/ soc_top__DOT__s1_mac__DOT__acc_out_3;
+    };
+    struct {
+        IData/*31:0*/ soc_top__DOT__s1_mac__DOT__pe0__DOT__acc_out;
+        IData/*31:0*/ soc_top__DOT__s1_mac__DOT__pe1__DOT__acc_out;
+        IData/*31:0*/ soc_top__DOT__s1_mac__DOT__pe2__DOT__acc_out;
+        IData/*31:0*/ soc_top__DOT__s1_mac__DOT__pe3__DOT__acc_out;
         IData/*31:0*/ __VactIterCount;
         QData/*35:0*/ soc_top__DOT__cpu__DOT__trace_data;
         QData/*35:0*/ soc_top__DOT__cpu__DOT__picorv32_core__DOT__trace_data;
@@ -608,6 +649,14 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
     static constexpr IData/*31:0*/ soc_top__DOT__s0_ram__DOT__MEM_SIZE = 0x00008000U;
     static constexpr IData/*31:0*/ soc_top__DOT__s1_mac__DOT__C_S_AXI_DATA_WIDTH = 0x00000020U;
     static constexpr IData/*31:0*/ soc_top__DOT__s1_mac__DOT__C_S_AXI_ADDR_WIDTH = 4U;
+    static constexpr IData/*31:0*/ soc_top__DOT__s1_mac__DOT__pe0__DOT__D_WIDTH = 8U;
+    static constexpr IData/*31:0*/ soc_top__DOT__s1_mac__DOT__pe0__DOT__ACC_WIDTH = 0x00000020U;
+    static constexpr IData/*31:0*/ soc_top__DOT__s1_mac__DOT__pe1__DOT__D_WIDTH = 8U;
+    static constexpr IData/*31:0*/ soc_top__DOT__s1_mac__DOT__pe1__DOT__ACC_WIDTH = 0x00000020U;
+    static constexpr IData/*31:0*/ soc_top__DOT__s1_mac__DOT__pe2__DOT__D_WIDTH = 8U;
+    static constexpr IData/*31:0*/ soc_top__DOT__s1_mac__DOT__pe2__DOT__ACC_WIDTH = 0x00000020U;
+    static constexpr IData/*31:0*/ soc_top__DOT__s1_mac__DOT__pe3__DOT__D_WIDTH = 8U;
+    static constexpr IData/*31:0*/ soc_top__DOT__s1_mac__DOT__pe3__DOT__ACC_WIDTH = 0x00000020U;
     static constexpr QData/*35:0*/ soc_top__DOT__cpu__DOT__picorv32_core__DOT__TRACE_BRANCH = 0x0000000100000000ULL;
     static constexpr QData/*35:0*/ soc_top__DOT__cpu__DOT__picorv32_core__DOT__TRACE_ADDR = 0x0000000200000000ULL;
     static constexpr QData/*35:0*/ soc_top__DOT__cpu__DOT__picorv32_core__DOT__TRACE_IRQ = 0x0000000800000000ULL;

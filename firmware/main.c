@@ -8,9 +8,13 @@
 #define MAC_CTRL    (*(volatile int*)0x30000000) 
 #define MAC_WGT     (*(volatile int*)0x30000004) 
 #define MAC_ACT     (*(volatile int*)0x30000008) 
-#define MAC_RES     (*(volatile int*)0x3000000C) 
-#define MAC_OFFSET  (*(volatile int*)0x30000010) // NEW SRAM OFFSET
 #define MAC_VLEN    (*(volatile int*)0x30000014)
+
+// The 4 Hardware PEs
+#define PE_0_RES    (*(volatile int*)0x30000020) 
+#define PE_1_RES    (*(volatile int*)0x30000024) 
+#define PE_2_RES    (*(volatile int*)0x30000028) 
+#define PE_3_RES    (*(volatile int*)0x3000002C) 
 
 #define QUANT_MULTIPLIER  1073741824
 #define QUANT_SHIFT       31
@@ -30,53 +34,46 @@ void dma_burst(void* src, void* dst, int len, int unpack_mode) {
     DMA_START = (unpack_mode << 1) | 1; 
 }
 
-void main() {
-    MAC_CTRL = 16; // Reset internal pointers
+char quantize(int raw_sum, int bias) {
+    long long scaled = (((long long)raw_sum + bias) * QUANT_MULTIPLIER) >> QUANT_SHIFT;
+    int q = (int)scaled;
+    if (q < 0) q = 0; if (q > 127) q = 127;
+    return (char)q;
+}
 
-    // =================================================================
-    // STAGE 1: THE CACHE HIT (HIDDEN LAYER)
-    // =================================================================
+void main() {
+    MAC_CTRL = 16;
     MAC_VLEN = INPUT_SIZE; 
     
-    // 1. Burst ALL 256 weights for the entire layer ONCE
+    // Burst ALL Layer 1 data and compute all 4 neurons simultaneously
     dma_burst((void*)layer1_weights, (void*)0x30000004, HIDDEN_NEURONS * INPUT_SIZE, 1);
-    
-    // 2. Burst the 64 sentence activations ONCE
     dma_burst(embedded_sentence, (void*)0x30000008, INPUT_SIZE, 0);
 
-    // 3. Compute instantly using internal SRAM offsets
-    for (int i = 0; i < HIDDEN_NEURONS; i++) {
-        MAC_OFFSET = i * INPUT_SIZE; // Point hardware to the correct chunk of SRAM
-        MAC_CTRL = 1; 
-        while ((MAC_CTRL & 2) == 0); 
-        
-        long long scaled_sum = (((long long)MAC_RES + layer1_biases[i]) * QUANT_MULTIPLIER) >> QUANT_SHIFT;
-        int q = (int)scaled_sum;
-        if (q < 0) q = 0; if (q > 127) q = 127;
-        hidden_outputs[i] = (char)q;
-        
-        MAC_CTRL = 2; // Ack
-    }
+    MAC_CTRL = 1; 
+    while ((MAC_CTRL & 2) == 0); 
+    
+    // Read the 4 parallel accumulators directly
+    hidden_outputs[0] = quantize(PE_0_RES, layer1_biases[0]);
+    hidden_outputs[1] = quantize(PE_1_RES, layer1_biases[1]);
+    hidden_outputs[2] = quantize(PE_2_RES, layer1_biases[2]);
+    hidden_outputs[3] = quantize(PE_3_RES, layer1_biases[3]);
+    MAC_CTRL = 2;
 
-    // =================================================================
-    // STAGE 2: OUTPUT LAYER
-    // =================================================================
+    // Output Layer (Compute sequentially since it's just 2 neurons)
     MAC_CTRL = 16; 
     MAC_VLEN = HIDDEN_NEURONS;
 
-    // Cache the 8 output weights and the 4 new hidden outputs
     dma_burst((void*)layer2_weights, (void*)0x30000004, OUTPUT_CLASSES * HIDDEN_NEURONS, 1);
     dma_burst(hidden_outputs, (void*)0x30000008, HIDDEN_NEURONS, 1);
 
-    for (int i = 0; i < OUTPUT_CLASSES; i++) {
-        MAC_OFFSET = i * HIDDEN_NEURONS;
-        MAC_CTRL = 1; 
-        while ((MAC_CTRL & 2) == 0); 
-        final_logits[i] = MAC_RES + layer2_biases[i];
-        MAC_CTRL = 2; 
-    }
+    MAC_CTRL = 1; 
+    while ((MAC_CTRL & 2) == 0); 
+    
+    final_logits[0] = PE_0_RES + layer2_biases[0];
+    final_logits[1] = PE_1_RES + layer2_biases[1];
 
-    MAC_CTRL = 16;
+    MAC_CTRL = 16; 
     MAC_WGT = final_logits[0]; MAC_ACT = final_logits[1]; 
+
     asm volatile("ebreak");
 }
