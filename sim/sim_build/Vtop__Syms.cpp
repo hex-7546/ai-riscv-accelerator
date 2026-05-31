@@ -32,7 +32,7 @@ Vtop__Syms::Vtop__Syms(VerilatedContext* contextp, const char* namep, Vtop* mode
     , TOP{this, namep}
 {
         // Check resources
-        Verilated::stackCheck(239);
+        Verilated::stackCheck(253);
     // Configure time unit / time precision
     _vm_contextp__->timeunit(-9);
     _vm_contextp__->timeprecision(-12);
@@ -591,6 +591,7 @@ Vtop__Syms::Vtop__Syms(VerilatedContext* contextp, const char* namep, Vtop* mode
         __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"acc_out_3", &(TOP.soc_top__DOT__s1_mac__DOT__acc_out_3), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
         __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"act_buffer", &(TOP.soc_top__DOT__s1_mac__DOT__act_buffer), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,1,1 ,0,63 ,31,0);
         __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"act_wr_ptr", &(TOP.soc_top__DOT__s1_mac__DOT__act_wr_ptr), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,5,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"active_bank", &(TOP.soc_top__DOT__s1_mac__DOT__active_bank), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
         __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"axi_arready", &(TOP.soc_top__DOT__s1_mac__DOT__axi_arready), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
         __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"axi_awready", &(TOP.soc_top__DOT__s1_mac__DOT__axi_awready), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
         __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"axi_bvalid", &(TOP.soc_top__DOT__s1_mac__DOT__axi_bvalid), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
@@ -599,10 +600,15 @@ Vtop__Syms::Vtop__Syms(VerilatedContext* contextp, const char* namep, Vtop* mode
         __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"axi_wready", &(TOP.soc_top__DOT__s1_mac__DOT__axi_wready), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
         __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"clear_pes", &(TOP.soc_top__DOT__s1_mac__DOT__clear_pes), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
         __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"compute_ptr", &(TOP.soc_top__DOT__s1_mac__DOT__compute_ptr), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,5,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"current_wgt_0", &(TOP.soc_top__DOT__s1_mac__DOT__current_wgt_0), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"current_wgt_1", &(TOP.soc_top__DOT__s1_mac__DOT__current_wgt_1), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"current_wgt_2", &(TOP.soc_top__DOT__s1_mac__DOT__current_wgt_2), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"current_wgt_3", &(TOP.soc_top__DOT__s1_mac__DOT__current_wgt_3), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
         __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"slv_reg_wren", &(TOP.soc_top__DOT__s1_mac__DOT__slv_reg_wren), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
         __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"state", &(TOP.soc_top__DOT__s1_mac__DOT__state), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,1,0);
         __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"vector_len", &(TOP.soc_top__DOT__s1_mac__DOT__vector_len), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
-        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"wgt_sram", &(TOP.soc_top__DOT__s1_mac__DOT__wgt_sram), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,1,1 ,0,255 ,31,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"wgt_sram_0", &(TOP.soc_top__DOT__s1_mac__DOT__wgt_sram_0), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,1,1 ,0,255 ,31,0);
+        __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"wgt_sram_1", &(TOP.soc_top__DOT__s1_mac__DOT__wgt_sram_1), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,1,1 ,0,255 ,31,0);
         __Vscope_soc_top__s1_mac.varInsert(__Vfinal,"wgt_wr_ptr", &(TOP.soc_top__DOT__s1_mac__DOT__wgt_wr_ptr), false, VLVT_UINT16,VLVD_NODIR|VLVF_PUB_RW,0,1 ,8,0);
         __Vscope_soc_top__s1_mac__pe0.varInsert(__Vfinal,"ACC_WIDTH", const_cast<void*>(static_cast<const void*>(&(TOP.soc_top__DOT__s1_mac__DOT__pe0__DOT__ACC_WIDTH))), true, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
         __Vscope_soc_top__s1_mac__pe0.varInsert(__Vfinal,"D_WIDTH", const_cast<void*>(static_cast<const void*>(&(TOP.soc_top__DOT__s1_mac__DOT__pe0__DOT__D_WIDTH))), true, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);

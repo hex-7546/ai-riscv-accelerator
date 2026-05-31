@@ -717,11 +717,15 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->soc_top__DOT__s1_mac__DOT__axi_rvalid = VL_RAND_RESET_I(1);
     vlSelf->soc_top__DOT__s1_mac__DOT__axi_rdata = VL_RAND_RESET_I(32);
     for (int __Vi0 = 0; __Vi0 < 256; ++__Vi0) {
-        vlSelf->soc_top__DOT__s1_mac__DOT__wgt_sram[__Vi0] = VL_RAND_RESET_I(32);
+        vlSelf->soc_top__DOT__s1_mac__DOT__wgt_sram_0[__Vi0] = VL_RAND_RESET_I(32);
+    }
+    for (int __Vi0 = 0; __Vi0 < 256; ++__Vi0) {
+        vlSelf->soc_top__DOT__s1_mac__DOT__wgt_sram_1[__Vi0] = VL_RAND_RESET_I(32);
     }
     for (int __Vi0 = 0; __Vi0 < 64; ++__Vi0) {
         vlSelf->soc_top__DOT__s1_mac__DOT__act_buffer[__Vi0] = VL_RAND_RESET_I(32);
     }
+    vlSelf->soc_top__DOT__s1_mac__DOT__active_bank = VL_RAND_RESET_I(1);
     vlSelf->soc_top__DOT__s1_mac__DOT__wgt_wr_ptr = VL_RAND_RESET_I(9);
     vlSelf->soc_top__DOT__s1_mac__DOT__act_wr_ptr = VL_RAND_RESET_I(6);
     vlSelf->soc_top__DOT__s1_mac__DOT__state = VL_RAND_RESET_I(2);
@@ -732,11 +736,11 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->soc_top__DOT__s1_mac__DOT__acc_out_1 = VL_RAND_RESET_I(32);
     vlSelf->soc_top__DOT__s1_mac__DOT__acc_out_2 = VL_RAND_RESET_I(32);
     vlSelf->soc_top__DOT__s1_mac__DOT__acc_out_3 = VL_RAND_RESET_I(32);
-    vlSelf->soc_top__DOT__s1_mac__DOT____Vcellinp__pe0__wgt_in = VL_RAND_RESET_I(8);
+    vlSelf->soc_top__DOT__s1_mac__DOT__current_wgt_0 = VL_RAND_RESET_I(32);
+    vlSelf->soc_top__DOT__s1_mac__DOT__current_wgt_1 = VL_RAND_RESET_I(32);
+    vlSelf->soc_top__DOT__s1_mac__DOT__current_wgt_2 = VL_RAND_RESET_I(32);
+    vlSelf->soc_top__DOT__s1_mac__DOT__current_wgt_3 = VL_RAND_RESET_I(32);
     vlSelf->soc_top__DOT__s1_mac__DOT____Vcellinp__pe0__act_in = VL_RAND_RESET_I(8);
-    vlSelf->soc_top__DOT__s1_mac__DOT____Vcellinp__pe1__wgt_in = VL_RAND_RESET_I(8);
-    vlSelf->soc_top__DOT__s1_mac__DOT____Vcellinp__pe2__wgt_in = VL_RAND_RESET_I(8);
-    vlSelf->soc_top__DOT__s1_mac__DOT____Vcellinp__pe3__wgt_in = VL_RAND_RESET_I(8);
     vlSelf->soc_top__DOT__s1_mac__DOT__slv_reg_wren = VL_RAND_RESET_I(1);
     vlSelf->soc_top__DOT__s1_mac__DOT__pe0__DOT__clk = VL_RAND_RESET_I(1);
     vlSelf->soc_top__DOT__s1_mac__DOT__pe0__DOT__rst_n = VL_RAND_RESET_I(1);

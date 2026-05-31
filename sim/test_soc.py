@@ -36,7 +36,7 @@ async def test_riscv_vector_mac_integration(dut):
             
     assert trapped, "Simulation timed out!"
 
-    positive_score = dut.s1_mac.wgt_sram[0].value.to_signed()
+    positive_score = dut.s1_mac.wgt_sram_1[0].value.to_signed()
     negative_score = dut.s1_mac.act_buffer[0].value.to_signed()
 
     dut._log.info("==================================================")

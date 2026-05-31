@@ -218,18 +218,6 @@ VL_INLINE_OPT void Vtop___024root___ico_sequent__TOP__0(Vtop___024root* vlSelf) 
                | (~ (IData)(vlSelfRef.soc_top__DOT__cpu_resetn))))) {
         vlSelfRef.soc_top__DOT__cpu__DOT__picorv32_core__DOT__clear_prefetched_high_word = 0U;
     }
-    vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe0__wgt_in 
-        = (0xffU & vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_sram
-           [vlSelfRef.soc_top__DOT__s1_mac__DOT__compute_ptr]);
-    vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe1__wgt_in 
-        = (0xffU & vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_sram
-           [(0xffU & ((IData)(0x40U) + (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT__compute_ptr)))]);
-    vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe2__wgt_in 
-        = (0xffU & vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_sram
-           [(0xffU & ((IData)(0x80U) + (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT__compute_ptr)))]);
-    vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe3__wgt_in 
-        = (0xffU & vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_sram
-           [(0xffU & ((IData)(0xc0U) + (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT__compute_ptr)))]);
     vlSelfRef.soc_top__DOT__cpu__DOT__picorv32_core__DOT__mem_la_read 
         = ((IData)(vlSelfRef.soc_top__DOT__cpu_resetn) 
            & ((~ (IData)(vlSelfRef.soc_top__DOT__cpu__DOT__picorv32_core__DOT__mem_la_use_prefetched_high_word)) 
@@ -238,6 +226,33 @@ VL_INLINE_OPT void Vtop___024root___ico_sequent__TOP__0(Vtop___024root* vlSelf) 
                     | ((IData)(vlSelfRef.soc_top__DOT__cpu__DOT__picorv32_core__DOT__mem_do_prefetch) 
                        | (IData)(vlSelfRef.soc_top__DOT__cpu__DOT__picorv32_core__DOT__mem_do_rdata))))));
     vlSelfRef.soc_top__DOT__cpu__DOT__resetn = vlSelfRef.soc_top__DOT__cpu_resetn;
+    if (vlSelfRef.soc_top__DOT__s1_mac__DOT__active_bank) {
+        vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_0 
+            = vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_sram_1
+            [vlSelfRef.soc_top__DOT__s1_mac__DOT__compute_ptr];
+        vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_1 
+            = vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_sram_1
+            [(0xffU & ((IData)(0x40U) + (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT__compute_ptr)))];
+        vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_2 
+            = vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_sram_1
+            [(0xffU & ((IData)(0x80U) + (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT__compute_ptr)))];
+        vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_3 
+            = vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_sram_1
+            [(0xffU & ((IData)(0xc0U) + (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT__compute_ptr)))];
+    } else {
+        vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_0 
+            = vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_sram_0
+            [vlSelfRef.soc_top__DOT__s1_mac__DOT__compute_ptr];
+        vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_1 
+            = vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_sram_0
+            [(0xffU & ((IData)(0x40U) + (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT__compute_ptr)))];
+        vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_2 
+            = vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_sram_0
+            [(0xffU & ((IData)(0x80U) + (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT__compute_ptr)))];
+        vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_3 
+            = vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_sram_0
+            [(0xffU & ((IData)(0xc0U) + (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT__compute_ptr)))];
+    }
     vlSelfRef.soc_top__DOT__cpu__DOT__picorv32_core__DOT__cpuregs_wrdata = 0U;
     if ((0x40U == (IData)(vlSelfRef.soc_top__DOT__cpu__DOT__picorv32_core__DOT__cpu_state))) {
         if (vlSelfRef.soc_top__DOT__cpu__DOT__picorv32_core__DOT__latched_branch) {
@@ -497,18 +512,22 @@ VL_INLINE_OPT void Vtop___024root___ico_sequent__TOP__0(Vtop___024root* vlSelf) 
         = vlSelfRef.soc_top__DOT__cpu__DOT__mem_wdata;
     vlSelfRef.soc_top__DOT__cpu__DOT__axi_adapter__DOT__mem_wstrb 
         = vlSelfRef.soc_top__DOT__cpu__DOT__mem_wstrb;
-    vlSelfRef.soc_top__DOT__s1_mac__DOT__pe0__DOT__wgt_in 
-        = vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe0__wgt_in;
-    vlSelfRef.soc_top__DOT__s1_mac__DOT__pe1__DOT__wgt_in 
-        = vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe1__wgt_in;
-    vlSelfRef.soc_top__DOT__s1_mac__DOT__pe2__DOT__wgt_in 
-        = vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe2__wgt_in;
-    vlSelfRef.soc_top__DOT__s1_mac__DOT__pe3__DOT__wgt_in 
-        = vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe3__wgt_in;
     vlSelfRef.soc_top__DOT__cpu__DOT__axi_adapter__DOT__resetn 
         = vlSelfRef.soc_top__DOT__cpu__DOT__resetn;
     vlSelfRef.soc_top__DOT__cpu__DOT__picorv32_core__DOT__resetn 
         = vlSelfRef.soc_top__DOT__cpu__DOT__resetn;
+    vlSelfRef.soc_top__DOT__s1_mac__DOT__pe0__DOT__wgt_in 
+        = (0xffU & (vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_0 
+                    >> 0U));
+    vlSelfRef.soc_top__DOT__s1_mac__DOT__pe1__DOT__wgt_in 
+        = (0xffU & (vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_1 
+                    >> 0U));
+    vlSelfRef.soc_top__DOT__s1_mac__DOT__pe2__DOT__wgt_in 
+        = (0xffU & (vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_2 
+                    >> 0U));
+    vlSelfRef.soc_top__DOT__s1_mac__DOT__pe3__DOT__wgt_in 
+        = (0xffU & (vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_3 
+                    >> 0U));
     if (vlSelfRef.soc_top__DOT__u_dma__DOT__dma_busy) {
         vlSelfRef.soc_top__DOT__mem_axi_awprot = 0U;
         vlSelfRef.soc_top__DOT__s0_ram__DOT__S_AXI_AWPROT 
@@ -1069,6 +1088,8 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
     __Vdly__soc_top__DOT__s1_mac__DOT__compute_ptr = 0;
     CData/*5:0*/ __Vdly__soc_top__DOT__s1_mac__DOT__act_wr_ptr;
     __Vdly__soc_top__DOT__s1_mac__DOT__act_wr_ptr = 0;
+    CData/*0:0*/ __Vdly__soc_top__DOT__s1_mac__DOT__active_bank;
+    __Vdly__soc_top__DOT__s1_mac__DOT__active_bank = 0;
     SData/*8:0*/ __Vdly__soc_top__DOT__s1_mac__DOT__wgt_wr_ptr;
     __Vdly__soc_top__DOT__s1_mac__DOT__wgt_wr_ptr = 0;
     CData/*0:0*/ __Vdly__soc_top__DOT__s1_mac__DOT__axi_arready;
@@ -1111,12 +1132,18 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
     __VdlyDim0__soc_top__DOT__s1_mac__DOT__act_buffer__v0 = 0;
     CData/*0:0*/ __VdlySet__soc_top__DOT__s1_mac__DOT__act_buffer__v0;
     __VdlySet__soc_top__DOT__s1_mac__DOT__act_buffer__v0 = 0;
-    IData/*31:0*/ __VdlyVal__soc_top__DOT__s1_mac__DOT__wgt_sram__v0;
-    __VdlyVal__soc_top__DOT__s1_mac__DOT__wgt_sram__v0 = 0;
-    CData/*7:0*/ __VdlyDim0__soc_top__DOT__s1_mac__DOT__wgt_sram__v0;
-    __VdlyDim0__soc_top__DOT__s1_mac__DOT__wgt_sram__v0 = 0;
-    CData/*0:0*/ __VdlySet__soc_top__DOT__s1_mac__DOT__wgt_sram__v0;
-    __VdlySet__soc_top__DOT__s1_mac__DOT__wgt_sram__v0 = 0;
+    IData/*31:0*/ __VdlyVal__soc_top__DOT__s1_mac__DOT__wgt_sram_0__v0;
+    __VdlyVal__soc_top__DOT__s1_mac__DOT__wgt_sram_0__v0 = 0;
+    CData/*7:0*/ __VdlyDim0__soc_top__DOT__s1_mac__DOT__wgt_sram_0__v0;
+    __VdlyDim0__soc_top__DOT__s1_mac__DOT__wgt_sram_0__v0 = 0;
+    CData/*0:0*/ __VdlySet__soc_top__DOT__s1_mac__DOT__wgt_sram_0__v0;
+    __VdlySet__soc_top__DOT__s1_mac__DOT__wgt_sram_0__v0 = 0;
+    IData/*31:0*/ __VdlyVal__soc_top__DOT__s1_mac__DOT__wgt_sram_1__v0;
+    __VdlyVal__soc_top__DOT__s1_mac__DOT__wgt_sram_1__v0 = 0;
+    CData/*7:0*/ __VdlyDim0__soc_top__DOT__s1_mac__DOT__wgt_sram_1__v0;
+    __VdlyDim0__soc_top__DOT__s1_mac__DOT__wgt_sram_1__v0 = 0;
+    CData/*0:0*/ __VdlySet__soc_top__DOT__s1_mac__DOT__wgt_sram_1__v0;
+    __VdlySet__soc_top__DOT__s1_mac__DOT__wgt_sram_1__v0 = 0;
     // Body
     __Vdly__soc_top__DOT__s1_mac__DOT__axi_awready 
         = vlSelfRef.soc_top__DOT__s1_mac__DOT__axi_awready;
@@ -1124,13 +1151,16 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
     __Vdly__soc_top__DOT__s1_mac__DOT__axi_bvalid = vlSelfRef.soc_top__DOT__s1_mac__DOT__axi_bvalid;
     __Vdly__soc_top__DOT__s1_mac__DOT__act_wr_ptr = vlSelfRef.soc_top__DOT__s1_mac__DOT__act_wr_ptr;
     __VdlySet__soc_top__DOT__s1_mac__DOT__act_buffer__v0 = 0U;
-    __Vdly__soc_top__DOT__s1_mac__DOT__wgt_wr_ptr = vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_wr_ptr;
-    __VdlySet__soc_top__DOT__s1_mac__DOT__wgt_sram__v0 = 0U;
     __Vdly__soc_top__DOT__s1_mac__DOT__state = vlSelfRef.soc_top__DOT__s1_mac__DOT__state;
     vlSelfRef.__Vdly__soc_top__DOT__dma_start = vlSelfRef.soc_top__DOT__dma_start;
     __Vdly__soc_top__DOT__s1_mac__DOT__compute_ptr 
         = vlSelfRef.soc_top__DOT__s1_mac__DOT__compute_ptr;
     vlSelfRef.__Vdly__soc_top__DOT__s2_bvalid_reg = vlSelfRef.soc_top__DOT__s2_bvalid_reg;
+    __Vdly__soc_top__DOT__s1_mac__DOT__wgt_wr_ptr = vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_wr_ptr;
+    __Vdly__soc_top__DOT__s1_mac__DOT__active_bank 
+        = vlSelfRef.soc_top__DOT__s1_mac__DOT__active_bank;
+    __VdlySet__soc_top__DOT__s1_mac__DOT__wgt_sram_0__v0 = 0U;
+    __VdlySet__soc_top__DOT__s1_mac__DOT__wgt_sram_1__v0 = 0U;
     __Vdly__soc_top__DOT__s1_mac__DOT__axi_arready 
         = vlSelfRef.soc_top__DOT__s1_mac__DOT__axi_arready;
     __VdlySet__soc_top__DOT__s0_ram__DOT__mem__v0 = 0U;
@@ -1330,27 +1360,46 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
     if (vlSelfRef.resetn) {
         if (vlSelfRef.soc_top__DOT__s1_mac__DOT__slv_reg_wren) {
             if ((0U == (0xfU & vlSelfRef.soc_top__DOT__mem_axi_awaddr))) {
+                if ((0x100U & vlSelfRef.soc_top__DOT__mem_axi_wdata)) {
+                    __Vdly__soc_top__DOT__s1_mac__DOT__active_bank 
+                        = (1U & (~ (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT__active_bank)));
+                }
                 if ((0x10U & vlSelfRef.soc_top__DOT__mem_axi_wdata)) {
                     __Vdly__soc_top__DOT__s1_mac__DOT__wgt_wr_ptr = 0U;
                 }
             } else if ((4U == (0xfU & vlSelfRef.soc_top__DOT__mem_axi_awaddr))) {
-                __VdlyVal__soc_top__DOT__s1_mac__DOT__wgt_sram__v0 
-                    = vlSelfRef.soc_top__DOT__mem_axi_wdata;
-                __VdlyDim0__soc_top__DOT__s1_mac__DOT__wgt_sram__v0 
-                    = (0xffU & (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_wr_ptr));
-                __VdlySet__soc_top__DOT__s1_mac__DOT__wgt_sram__v0 = 1U;
+                if (vlSelfRef.soc_top__DOT__s1_mac__DOT__active_bank) {
+                    __VdlyVal__soc_top__DOT__s1_mac__DOT__wgt_sram_0__v0 
+                        = vlSelfRef.soc_top__DOT__mem_axi_wdata;
+                    __VdlyDim0__soc_top__DOT__s1_mac__DOT__wgt_sram_0__v0 
+                        = (0xffU & (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_wr_ptr));
+                    __VdlySet__soc_top__DOT__s1_mac__DOT__wgt_sram_0__v0 = 1U;
+                } else {
+                    __VdlyVal__soc_top__DOT__s1_mac__DOT__wgt_sram_1__v0 
+                        = vlSelfRef.soc_top__DOT__mem_axi_wdata;
+                    __VdlyDim0__soc_top__DOT__s1_mac__DOT__wgt_sram_1__v0 
+                        = (0xffU & (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_wr_ptr));
+                    __VdlySet__soc_top__DOT__s1_mac__DOT__wgt_sram_1__v0 = 1U;
+                }
                 __Vdly__soc_top__DOT__s1_mac__DOT__wgt_wr_ptr 
                     = (0x1ffU & ((IData)(1U) + (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_wr_ptr)));
             }
         }
     } else {
+        __Vdly__soc_top__DOT__s1_mac__DOT__active_bank = 0U;
         __Vdly__soc_top__DOT__s1_mac__DOT__wgt_wr_ptr = 0U;
     }
     vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_wr_ptr 
         = __Vdly__soc_top__DOT__s1_mac__DOT__wgt_wr_ptr;
-    if (__VdlySet__soc_top__DOT__s1_mac__DOT__wgt_sram__v0) {
-        vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_sram[__VdlyDim0__soc_top__DOT__s1_mac__DOT__wgt_sram__v0] 
-            = __VdlyVal__soc_top__DOT__s1_mac__DOT__wgt_sram__v0;
+    vlSelfRef.soc_top__DOT__s1_mac__DOT__active_bank 
+        = __Vdly__soc_top__DOT__s1_mac__DOT__active_bank;
+    if (__VdlySet__soc_top__DOT__s1_mac__DOT__wgt_sram_0__v0) {
+        vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_sram_0[__VdlyDim0__soc_top__DOT__s1_mac__DOT__wgt_sram_0__v0] 
+            = __VdlyVal__soc_top__DOT__s1_mac__DOT__wgt_sram_0__v0;
+    }
+    if (__VdlySet__soc_top__DOT__s1_mac__DOT__wgt_sram_1__v0) {
+        vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_sram_1[__VdlyDim0__soc_top__DOT__s1_mac__DOT__wgt_sram_1__v0] 
+            = __VdlyVal__soc_top__DOT__s1_mac__DOT__wgt_sram_1__v0;
     }
     if (__VdlySet__soc_top__DOT__cpu__DOT__picorv32_core__DOT__cpuregs__v0) {
         vlSelfRef.soc_top__DOT__cpu__DOT__picorv32_core__DOT__cpuregs[__VdlyDim0__soc_top__DOT__cpu__DOT__picorv32_core__DOT__cpuregs__v0] 
@@ -1374,27 +1423,35 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
             vlSelfRef.soc_top__DOT__s1_mac__DOT__pe0__DOT__acc_out 
                 = (vlSelfRef.soc_top__DOT__s1_mac__DOT__pe0__DOT__acc_out 
                    + VL_MULS_III(32, VL_EXTENDS_II(32,8, (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe0__act_in)), 
-                                 VL_EXTENDS_II(32,8, (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe0__wgt_in))));
+                                 VL_EXTENDS_II(32,8, 
+                                               (0xffU 
+                                                & vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_0))));
             vlSelfRef.soc_top__DOT__s1_mac__DOT__pe1__DOT__acc_out 
                 = (vlSelfRef.soc_top__DOT__s1_mac__DOT__pe1__DOT__acc_out 
                    + VL_MULS_III(32, VL_EXTENDS_II(32,8, (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe0__act_in)), 
-                                 VL_EXTENDS_II(32,8, (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe1__wgt_in))));
+                                 VL_EXTENDS_II(32,8, 
+                                               (0xffU 
+                                                & vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_1))));
             vlSelfRef.soc_top__DOT__s1_mac__DOT__pe2__DOT__acc_out 
                 = (vlSelfRef.soc_top__DOT__s1_mac__DOT__pe2__DOT__acc_out 
                    + VL_MULS_III(32, VL_EXTENDS_II(32,8, (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe0__act_in)), 
-                                 VL_EXTENDS_II(32,8, (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe2__wgt_in))));
+                                 VL_EXTENDS_II(32,8, 
+                                               (0xffU 
+                                                & vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_2))));
             vlSelfRef.soc_top__DOT__s1_mac__DOT__pe3__DOT__acc_out 
                 = (vlSelfRef.soc_top__DOT__s1_mac__DOT__pe3__DOT__acc_out 
                    + VL_MULS_III(32, VL_EXTENDS_II(32,8, (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe0__act_in)), 
-                                 VL_EXTENDS_II(32,8, (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe3__wgt_in))));
+                                 VL_EXTENDS_II(32,8, 
+                                               (0xffU 
+                                                & vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_3))));
             vlSelfRef.soc_top__DOT__s1_mac__DOT__pe0__DOT__wgt_out 
-                = vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe0__wgt_in;
+                = (0xffU & vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_0);
             vlSelfRef.soc_top__DOT__s1_mac__DOT__pe1__DOT__wgt_out 
-                = vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe1__wgt_in;
+                = (0xffU & vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_1);
             vlSelfRef.soc_top__DOT__s1_mac__DOT__pe2__DOT__wgt_out 
-                = vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe2__wgt_in;
+                = (0xffU & vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_2);
             vlSelfRef.soc_top__DOT__s1_mac__DOT__pe3__DOT__wgt_out 
-                = vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe3__wgt_in;
+                = (0xffU & vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_3);
             vlSelfRef.soc_top__DOT__s1_mac__DOT__pe0__DOT__act_out 
                 = vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe0__act_in;
             vlSelfRef.soc_top__DOT__s1_mac__DOT__pe1__DOT__act_out 
@@ -1798,18 +1855,33 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
         = vlSelfRef.soc_top__DOT__s1_mac__DOT__clear_pes;
     vlSelfRef.soc_top__DOT__s1_mac__DOT__pe3__DOT__clear 
         = vlSelfRef.soc_top__DOT__s1_mac__DOT__clear_pes;
-    vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe0__wgt_in 
-        = (0xffU & vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_sram
-           [vlSelfRef.soc_top__DOT__s1_mac__DOT__compute_ptr]);
-    vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe1__wgt_in 
-        = (0xffU & vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_sram
-           [(0xffU & ((IData)(0x40U) + (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT__compute_ptr)))]);
-    vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe2__wgt_in 
-        = (0xffU & vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_sram
-           [(0xffU & ((IData)(0x80U) + (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT__compute_ptr)))]);
-    vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe3__wgt_in 
-        = (0xffU & vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_sram
-           [(0xffU & ((IData)(0xc0U) + (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT__compute_ptr)))]);
+    if (vlSelfRef.soc_top__DOT__s1_mac__DOT__active_bank) {
+        vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_0 
+            = vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_sram_1
+            [vlSelfRef.soc_top__DOT__s1_mac__DOT__compute_ptr];
+        vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_1 
+            = vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_sram_1
+            [(0xffU & ((IData)(0x40U) + (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT__compute_ptr)))];
+        vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_2 
+            = vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_sram_1
+            [(0xffU & ((IData)(0x80U) + (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT__compute_ptr)))];
+        vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_3 
+            = vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_sram_1
+            [(0xffU & ((IData)(0xc0U) + (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT__compute_ptr)))];
+    } else {
+        vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_0 
+            = vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_sram_0
+            [vlSelfRef.soc_top__DOT__s1_mac__DOT__compute_ptr];
+        vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_1 
+            = vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_sram_0
+            [(0xffU & ((IData)(0x40U) + (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT__compute_ptr)))];
+        vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_2 
+            = vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_sram_0
+            [(0xffU & ((IData)(0x80U) + (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT__compute_ptr)))];
+        vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_3 
+            = vlSelfRef.soc_top__DOT__s1_mac__DOT__wgt_sram_0
+            [(0xffU & ((IData)(0xc0U) + (IData)(vlSelfRef.soc_top__DOT__s1_mac__DOT__compute_ptr)))];
+    }
     vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe0__act_in 
         = (0xffU & vlSelfRef.soc_top__DOT__s1_mac__DOT__act_buffer
            [vlSelfRef.soc_top__DOT__s1_mac__DOT__compute_ptr]);
@@ -1821,13 +1893,17 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
     vlSelfRef.soc_top__DOT__cpu__DOT__picorv32_core__DOT__dbg_insn_rs1 
         = vlSelfRef.soc_top__DOT__cpu__DOT__picorv32_core__DOT__q_insn_rs1;
     vlSelfRef.soc_top__DOT__s1_mac__DOT__pe0__DOT__wgt_in 
-        = vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe0__wgt_in;
+        = (0xffU & (vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_0 
+                    >> 0U));
     vlSelfRef.soc_top__DOT__s1_mac__DOT__pe1__DOT__wgt_in 
-        = vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe1__wgt_in;
+        = (0xffU & (vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_1 
+                    >> 0U));
     vlSelfRef.soc_top__DOT__s1_mac__DOT__pe2__DOT__wgt_in 
-        = vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe2__wgt_in;
+        = (0xffU & (vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_2 
+                    >> 0U));
     vlSelfRef.soc_top__DOT__s1_mac__DOT__pe3__DOT__wgt_in 
-        = vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe3__wgt_in;
+        = (0xffU & (vlSelfRef.soc_top__DOT__s1_mac__DOT__current_wgt_3 
+                    >> 0U));
     vlSelfRef.soc_top__DOT__s1_mac__DOT__pe0__DOT__act_in 
         = vlSelfRef.soc_top__DOT__s1_mac__DOT____Vcellinp__pe0__act_in;
     vlSelfRef.soc_top__DOT__s1_mac__DOT__pe1__DOT__act_in 

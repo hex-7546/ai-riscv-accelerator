@@ -10,7 +10,6 @@
 #define MAC_ACT     (*(volatile int*)0x30000008) 
 #define MAC_VLEN    (*(volatile int*)0x30000014)
 
-// The 4 Hardware PEs
 #define PE_0_RES    (*(volatile int*)0x30000020) 
 #define PE_1_RES    (*(volatile int*)0x30000024) 
 #define PE_2_RES    (*(volatile int*)0x30000028) 
@@ -42,30 +41,44 @@ char quantize(int raw_sum, int bias) {
 }
 
 void main() {
-    MAC_CTRL = 16;
     MAC_VLEN = INPUT_SIZE; 
+    MAC_CTRL = 16; // Reset Pointers. Default state: Bank 0 Active, Bank 1 Inactive.
     
-    // Burst ALL Layer 1 data and compute all 4 neurons simultaneously
+    // 1. PRE-LOAD: Burst Layer 1 into Bank 1 (Inactive Bank)
     dma_burst((void*)layer1_weights, (void*)0x30000004, HIDDEN_NEURONS * INPUT_SIZE, 1);
+    
+    // 2. PING: Toggle Bank! (Bank 1 is now Active, Bank 0 is Inactive)
+    MAC_CTRL = 0x110; // Bit 8 (Toggle) + Bit 4 (Reset pointers)
+    
+    // Load sentence activations
     dma_burst(embedded_sentence, (void*)0x30000008, INPUT_SIZE, 0);
 
-    MAC_CTRL = 1; 
+    // =================================================================
+    // 3. CONCURRENT EXECUTION PHASE
+    // =================================================================
+    MAC_CTRL = 1; // START COMPUTE: MAC starts multiplying Layer 1 from Bank 1
+    
+    // OVERLAP: While MAC computes, DMA immediately fetches Layer 2 into Bank 0
+    dma_burst((void*)layer2_weights, (void*)0x30000004, OUTPUT_CLASSES * HIDDEN_NEURONS, 1);
+    // =================================================================
+
+    // 4. Wait for Layer 1 Compute to finish
     while ((MAC_CTRL & 2) == 0); 
     
-    // Read the 4 parallel accumulators directly
     hidden_outputs[0] = quantize(PE_0_RES, layer1_biases[0]);
     hidden_outputs[1] = quantize(PE_1_RES, layer1_biases[1]);
     hidden_outputs[2] = quantize(PE_2_RES, layer1_biases[2]);
     hidden_outputs[3] = quantize(PE_3_RES, layer1_biases[3]);
-    MAC_CTRL = 2;
+    MAC_CTRL = 2; // Ack
 
-    // Output Layer (Compute sequentially since it's just 2 neurons)
-    MAC_CTRL = 16; 
+    // 5. PONG: Toggle Bank! (Bank 0 is Active, Bank 1 is Inactive)
+    MAC_CTRL = 0x110; 
     MAC_VLEN = HIDDEN_NEURONS;
 
-    dma_burst((void*)layer2_weights, (void*)0x30000004, OUTPUT_CLASSES * HIDDEN_NEURONS, 1);
+    // Load intermediate hidden outputs
     dma_burst(hidden_outputs, (void*)0x30000008, HIDDEN_NEURONS, 1);
 
+    // 6. COMPUTE Layer 2 instantly (weights were pre-loaded during Step 3!)
     MAC_CTRL = 1; 
     while ((MAC_CTRL & 2) == 0); 
     
