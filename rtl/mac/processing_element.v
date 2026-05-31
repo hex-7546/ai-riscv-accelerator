@@ -1,36 +1,31 @@
 `timescale 1ns / 1ps
 
 module processing_element #(
-    parameter D_WIDTH = 8,   // 8-bit inputs
-    parameter ACC_WIDTH = 32 // 32-bit accumulation
+    parameter D_WIDTH = 32
 )(
     input  wire                 clk,
     input  wire                 rst_n,
-    input  wire                 clear,    // Signal to wipe the accumulator for a new matrix
+    input  wire                 clear,
     
-    // Incoming Data (The Catch)
-    input  wire signed [D_WIDTH-1:0] act_in,   // From West
-    input  wire signed [D_WIDTH-1:0] wgt_in,   // From North
+    // Catch from North/West
+    input  wire signed [D_WIDTH-1:0] act_in,
+    input  wire signed [D_WIDTH-1:0] wgt_in,
     
-    // Outgoing Data (The Pass)
-    output reg  signed [D_WIDTH-1:0] act_out,  // To East
-    output reg  signed [D_WIDTH-1:0] wgt_out,  // To South
+    // Pass to South/East
+    output reg  signed [D_WIDTH-1:0] act_out,
+    output reg  signed [D_WIDTH-1:0] wgt_out,
     
-    // Internal State (The Compute)
-    output reg  signed [ACC_WIDTH-1:0] acc_out
+    // Internal Compute
+    output reg  signed [D_WIDTH-1:0] acc_out
 );
 
     always @(posedge clk) begin
         if (!rst_n) begin
-            act_out <= {D_WIDTH{1'b0}};
-            wgt_out <= {D_WIDTH{1'b0}};
-            acc_out <= {ACC_WIDTH{1'b0}};
+            act_out <= 0; wgt_out <= 0; acc_out <= 0;
         end else if (clear) begin
-            acc_out <= {ACC_WIDTH{1'b0}};
-            act_out <= {D_WIDTH{1'b0}};
-            wgt_out <= {D_WIDTH{1'b0}};
+            acc_out <= 0; act_out <= 0; wgt_out <= 0;
         end else begin
-            // 1. Pass data to the neighbors
+            // 1. Pass data down the mesh
             act_out <= act_in;
             wgt_out <= wgt_in;
             

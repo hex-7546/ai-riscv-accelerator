@@ -282,12 +282,12 @@ module soc_top (
 
     axi4_lite_mac #(.C_S_AXI_DATA_WIDTH(32), .C_S_AXI_ADDR_WIDTH(4)) s1_mac (
         .S_AXI_ACLK   (clk), .S_AXI_ARESETN(resetn),
-        .S_AXI_AWADDR (mem_axi_awaddr[5:0]), .S_AXI_AWPROT (mem_axi_awprot),
+        .S_AXI_AWADDR (mem_axi_awaddr[6:0]), .S_AXI_AWPROT (mem_axi_awprot),
         .S_AXI_AWVALID(s1_axi_awvalid), .S_AXI_AWREADY(s1_axi_awready),
         .S_AXI_WDATA  (mem_axi_wdata),  .S_AXI_WSTRB  (mem_axi_wstrb),
         .S_AXI_WVALID (s1_axi_wvalid),  .S_AXI_WREADY (s1_axi_wready),
         .S_AXI_BRESP  (s1_axi_bresp),   .S_AXI_BVALID (s1_axi_bvalid), .S_AXI_BREADY (s1_axi_bready),
-        .S_AXI_ARADDR (mem_axi_araddr[5:0]), .S_AXI_ARPROT (mem_axi_arprot),
+        .S_AXI_ARADDR (mem_axi_araddr[6:0]), .S_AXI_ARPROT (mem_axi_arprot),
         .S_AXI_ARVALID(s1_axi_arvalid), .S_AXI_ARREADY(s1_axi_arready),
         .S_AXI_RDATA  (s1_axi_rdata),   .S_AXI_RRESP  (s1_axi_rresp),
         .S_AXI_RVALID (s1_axi_rvalid),  .S_AXI_RREADY (s1_axi_rready)
